@@ -6,19 +6,26 @@
 
 %%
 
-"<"title>[^<]* { printf("Tit: %s \n", yytext+7);}
+"<"title>[^<]* { printf("\nARTIGO\nTit: %s \n", yytext+7);} /* imprime título */
 
-(Info[^"|"]*) { printf("Info: %s \n", yytext+5); }
+(Info[^"|"]*) { printf("Info: %s \n", yytext+5); } /* imprime Info */
 
-\|([A-z ]*)\= { printf("%s", yytext+1); BEGIN ACORDA; }
+\|([A-z ]*)\= { printf("%s", yytext+1); BEGIN ACORDA; }  /* imprime a parte da esquerda da info */
 
-<ACORDA>[^\[\]]* { printf("%s", yytext);}
+<ACORDA>\s[A-z 0-9\(\)\.]* { printf("%s", yytext);} /* texto normal */
 
-<ACORDA>\[\[(.*)\]\] { printf("%s \n", yytext);}
+<ACORDA>\n|\r { printf("\n"); BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
-[A-z]*"." { printf("Resumo: %s", yytext); }
+<ACORDA>\[\[(.*?)\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
+                        printf("%s", yytext+i+1);
+                        } /* [[Tétis (nereida)|Tétis]] */
 
-.|\n {;}
+<ACORDA>\[\[[A-z]*?\]\] { yytext[yyleng-2] = '\0'; printf("%s", yytext+2);} /* [[Peleu]] */
+<ACORDA>\[\[([\S]*)\]\], { yytext[yyleng-2] = '\0'; printf("%s", yytext+2);} /* [[Peleu]], */
+
+\}\}[\n\r]*\'\'\'.*\n|\r { yytext[yyleng-2] = '\0'; printf("Resumo: ");}
+
+.|\n|\] {;}
 %%
 
 int yywrap() {
