@@ -2,7 +2,8 @@
 #include <stdio.h>
 %}
 
-%x ACORDA
+%x INFO
+%x RESUMO
 
 %%
 
@@ -10,22 +11,29 @@
 
 (Info[^"|"]*) { printf("Info: %s \n", yytext+5); } /* imprime Info */
 
-\|([A-z ]*)\= { printf("%s", yytext+1); BEGIN ACORDA; }  /* imprime a parte da esquerda da info */
+\|([A-z ]*)\= { printf("%s", yytext+1); BEGIN INFO; }  /* imprime a parte da esquerda da info */
 
-<ACORDA>\s[A-z 0-9\(\)\.]* { printf("%s", yytext);} /* texto normal */
+<INFO>\n|\r { printf("\n"); BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
-<ACORDA>\n|\r { printf("\n"); BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
-
-<ACORDA>\[\[(.*?)\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
+<INFO>\[\[(.*?)\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
                         } /* [[Tétis (nereida)|Tétis]] */
 
-<ACORDA>\[\[[A-z]*?\]\] { yytext[yyleng-2] = '\0'; printf("%s", yytext+2);} /* [[Peleu]] */
-<ACORDA>\[\[([\S]*)\]\], { yytext[yyleng-2] = '\0'; printf("%s", yytext+2);} /* [[Peleu]], */
+<INFO>\[|\] {;}
 
-\}\}[\n\r]*\'\'\'.*\n|\r { yytext[yyleng-2] = '\0'; printf("Resumo: ");}
+<INFO>\{\{[A-z]*\}\}[ ] {;}
 
-.|\n|\] {;}
+\'\'\'[.]*? { printf("Resumo: "); BEGIN RESUMO;}
+
+<RESUMO>\[|\] {;}
+
+<RESUMO>\[\[(.*?)\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
+                        printf("%s", yytext+i+1);
+                        } /* [[Tétis (nereida)|Tétis]] */
+
+<RESUMO>\n|\r { printf("\n"); BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
+
+.|\n {;}
 %%
 
 int yywrap() {
