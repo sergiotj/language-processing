@@ -15,13 +15,15 @@ LETTERS [\x00-\xff]
 
 "<"title>[^<]* { x++; printf("\n\nARTIGO\nTit: %s \n", yytext+7);} /* imprime título */
 
-^\{\{(Info[^"|"]*) { printf("Info: %s \n", yytext+7); BEGIN INFO; } /* imprime cabeçalho da info */
+\{\{(Info[^"|"]*) { printf("Info: %s \n", yytext+7); BEGIN INFO; } /* imprime cabeçalho da info */
 
-<INFO>[ ]?\|[ ]?([a-ÿA-z0-9A-Þ _]*)[ ]?\= { if (yytext[0] == '|') printf("%s", yytext+1); else printf("%s", yytext+2); BEGIN INSIDEINFO; }  /* imprime a parte da esquerda da info */
+<INFO>[ |]?[ ]?([a-ÿA-z0-9A-Þ _ã]*)[ ]?\= { if (yytext[0] == '|') printf("%s", yytext+1); else printf("%s", yytext); BEGIN INSIDEINFO; }  /* imprime a parte da esquerda da info */
 
-<INSIDEINFO>\n|\r { BEGIN INFO; printf("\r");} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
+<INSIDEINFO>[\n\r][\| ] { BEGIN INFO; printf("\r");} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
 <INFO>^\}\} { yytext[yyleng-2] = '\0'; BEGIN INITIAL;}
+
+<INSIDEINFO>\}\}[\n\r]*[A-Z'] { BEGIN INITIAL;}
 
 <INSIDEINFO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
@@ -37,7 +39,7 @@ LETTERS [\x00-\xff]
 <INSIDEINFO>&amp;nbsp; {;}
 <INSIDEINFO>&lt;.*&gt\; {;}
 
-[ A-Z]?\'\'\'[.]* { if (x == 1) {printf("\nResumo: "); BEGIN RESUMO;}}
+[A-Z]?\'\'\'[.]* { if (x == 1) {printf("\nResumo: "); BEGIN RESUMO;}}
 
 <RESUMO>\[|\]|(''') {;}
 
