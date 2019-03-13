@@ -18,7 +18,7 @@ int x = 0;
 
 <INFO>[\n\r][\| ] { printf("\r");} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
-<INFO>[\n\r][^\|\&]*[^| &][}] { yytext[yyleng-2] = '\0'; BEGIN INITIAL;}
+<INFO>[\n\r][^\|\&]*[^| &] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL;}
 
 <INFO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
@@ -33,7 +33,7 @@ int x = 0;
 <INFO>&amp;nbsp; {;}
 <INFO>&lt;(.*)&gt\; {;}
 
-<INITIAL>\}\}(\n|\r)*[A-Z\'][^ ]* { if (x == 1) { printf("\nResumo: %s", yytext+3); BEGIN RESUMO;} }
+<INITIAL>\{\{[\n\r]*[A-Z\']* { if (x == 1) { printf("\nResumo: %s", yytext); BEGIN RESUMO; x = 2; } }
 
 <RESUMO>\[|\]|(''') {;}
 
@@ -45,11 +45,8 @@ int x = 0;
                         printf("%s", yytext+i+1);
                         } /* [[Tétis (nereida)|Tétis]] */
 
-<RESUMO>\&lt\;ref {BEGIN LINKS;} /* tira links/referencias */
-<LINKS>.|\n {;}
-<LINKS>&lt\;\/ref&gt\; {BEGIN RESUMO;}
 
-<RESUMO>\n|\r { printf("\n"); x = 0; BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
+<RESUMO>[\n\r][\n\r] { printf("\n"); BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
 .|\n {;}
 %%
