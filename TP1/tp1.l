@@ -5,41 +5,35 @@ int x = 0;
 %}
 
 %x INFO
-%x INSIDEINFO
 %x RESUMO
 %x LINKS
 
-LETTERS [\x00-\xff]
-
 %%
 
-"<"title>[^<]* { x++; printf("\n\nARTIGO\nTit: %s \n", yytext+7);} /* imprime título */
+"<"title>[^<]* { x = 1; printf("\n\nARTIGO\nTit: %s \n", yytext+7);} /* imprime título */
 
 \{\{(Info[^"|"]*) { printf("Info: %s \n", yytext+7); BEGIN INFO; } /* imprime cabeçalho da info */
 
-<INFO>[ |]?[ ]?([a-ÿA-z0-9A-Þ _ã]*)[ ]?\= { if (yytext[0] == '|') printf("%s", yytext+1); else printf("%s", yytext); BEGIN INSIDEINFO; }  /* imprime a parte da esquerda da info */
+<INFO>[ |]?[ ]?([a-ÿA-z0-9A-Þ _ã]*)[ ]?\= { if (yytext[0] == '|') printf("%s", yytext+1); else printf("%s", yytext);}  /* imprime a parte da esquerda da info */
 
-<INSIDEINFO>[\n\r][\| ] { BEGIN INFO; printf("\r");} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
+<INFO>[\n\r][\| ] { printf("\r");} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
-<INFO>^\}\} { yytext[yyleng-2] = '\0'; BEGIN INITIAL;}
+<INFO>[\n\r][^\|\&]*[^| &][}] { yytext[yyleng-2] = '\0'; BEGIN INITIAL;}
 
-<INSIDEINFO>\}\}[\n\r]*[A-Z'] { BEGIN INITIAL;}
-
-<INSIDEINFO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
+<INFO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
                         } /* [[Tétis (nereida)|Tétis]] */
 
-<INSIDEINFO>\[|\] {;}
-<INSIDEINFO>\&lt\;ref { BEGIN LINKS; }
+<INFO>\[|\] {;}
+<INFO>\&lt\;ref { ; }
+<INFO>\'\'\' {;} /* tirar os ''' */
+<INFO>&lt;br&gt; {;}
+<INFO>\{\{[A-z]*\}\}[ ] {;}
+<INFO>\(.*?\) {;} /* tirar tudo o que é parentesis */
+<INFO>&amp;nbsp; {;}
+<INFO>&lt;(.*)&gt\; {;}
 
-<INSIDEINFO>\'\'\' {;} /* tirar os ''' */
-<INSIDEINFO>&lt;br&gt; {;}
-<INSIDEINFO>\{\{[A-z]*\}\}[ ] {;}
-<INSIDEINFO>\(.*?\) {;} /* tirar tudo o que é parentesis */
-<INSIDEINFO>&amp;nbsp; {;}
-<INSIDEINFO>&lt;.*&gt\; {;}
-
-[A-Z]?\'\'\'[.]* { if (x == 1) {printf("\nResumo: "); BEGIN RESUMO;}}
+<INITIAL>\}\}(\n|\r)*[A-Z\'][^ ]* { if (x == 1) { printf("\nResumo: %s", yytext+3); BEGIN RESUMO;} }
 
 <RESUMO>\[|\]|(''') {;}
 
@@ -55,7 +49,7 @@ LETTERS [\x00-\xff]
 <LINKS>.|\n {;}
 <LINKS>&lt\;\/ref&gt\; {BEGIN RESUMO;}
 
-<RESUMO>\n|\r { printf("\n"); BEGIN INITIAL; x = 0;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
+<RESUMO>\n|\r { printf("\n"); x = 0; BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
 .|\n {;}
 %%
