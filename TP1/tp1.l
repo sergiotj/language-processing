@@ -1,6 +1,8 @@
 %{
 #include <stdio.h>
 #include <ctype.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 int x = -1;
 int cat = 0;
@@ -60,6 +62,18 @@ int tit = 0;
 .|\n {;}
 %%
 
+// LATEX ----------
+void beginDocument(){
+	printf("\\documentclass[a4paper]{article}\n\n");
+	printf("\\usepackage[portuguese]{babel}\n\n");
+	printf("\\usepackage[utf8]{inputenc}\n");
+	printf("\\begin{document}\n\n");
+}
+
+void endDocument(){
+	printf("\\end{document}\n");
+}
+
 int yywrap() {
 
     return 1;
@@ -77,8 +91,15 @@ int main(int argc, char **argv) {
 
     toRead = atoi(argv[1]);
 
-    yylex();
+    int fd = open("tp1.tex", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
 
-    printf("\n");
+    dup2(fd, 1);
+
+    beginDocument();
+    yylex();
+    endDocument();
+
+    close(fd);
+
     return 0;
 }
