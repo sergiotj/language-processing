@@ -3,6 +3,7 @@
 #include <ctype.h>
 
 int x = -1;
+int cat = 0;
 %}
 
 %x INFO
@@ -11,7 +12,7 @@ int x = -1;
 
 %%
 
-"<"title>[^<]* { printf("\n\nARTIGO\nTit: %s \n", yytext+7); x = 1;} /* imprime título */
+"<"title>[^<]* { printf("\n\nARTIGO\nTit: %s \n", yytext+7); x = 1; cat = 0;} /* imprime título */
 
 \{\{(Info[^"|"]*) { printf("Info: %s \n", yytext+7); BEGIN INFO;} /* imprime cabeçalho da info */
 
@@ -50,6 +51,9 @@ int x = -1;
 
 
 <RESUMO>[\n\r]+ { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
+
+\[\[Categoria\:.*\]\][\n|\r] { if (cat == 0) {printf("\nCategorias: ");} yytext[yyleng-3] = ';'; yytext[yyleng-2] = ' '; yytext[yyleng-1] = '\0';
+                                                printf("%s", yytext+12); cat++;}
 
 .|\n {;}
 %%
