@@ -4,6 +4,8 @@
 
 int x = -1;
 int cat = 0;
+int toRead;
+int tit = 0;
 %}
 
 %x INFO
@@ -12,7 +14,7 @@ int cat = 0;
 
 %%
 
-"<"title>[^<]* { printf("\n\nARTIGO\nTit: %s \n", yytext+7); x = 1; cat = 0;} /* imprime título */
+"<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 1;}} printf("\n\nARTIGO\nTit: %s \n", yytext+7); x = 1; cat = 0; tit++;} /* imprime título */
 
 \{\{(Info[^"|"]*) { printf("Info: %s \n", yytext+7); BEGIN INFO;} /* imprime cabeçalho da info */
 
@@ -63,10 +65,20 @@ int yywrap() {
     return 1;
 }
 
-int main() {
+int main(int argc, char **argv) {
 
     printf("filtragem a começar\n");
+
+    if (argc < 2) {
+
+        printf("Não passou os argumentos suficientes à função\n");
+        return 0;
+    }
+
+    toRead = atoi(argv[1]);
+
     yylex();
+
     printf("\n");
     return 0;
 }
