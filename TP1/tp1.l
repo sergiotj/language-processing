@@ -43,11 +43,11 @@ int tit = 0;
 
 <RESUMO>(\[|\])|\' {;}
 
-<RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {printf("OIE");}
+<RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {;}
 
-<RESUMO>\(\{\{(.*)\}\}\) { printf("("); yytext[yyleng-3] = '\0'; int i = 0; while (yytext[i] != '|') { i++;} i++; while (yytext[i] != '|') { i++;}
+<RESUMO>\(\{\{[^ ]*\}\}\) { printf("("); yytext[yyleng-3] = '\0'; int i = 0; while (yytext[i] != '|') { i++;} i++; while (yytext[i] != '|') { i++;}
                             printf("%s", yytext+i+1); printf(")");
-                        } /* [[Tétis (nereida)|Tétis|Tétis]] */
+                        }
 
 <RESUMO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
@@ -56,7 +56,7 @@ int tit = 0;
 
 <RESUMO>[\n\r]+ { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
-\[\[Categoria\:.*\]\][\n|\r] { if (cat == 0) {printf("\nCategorias: ");} yytext[yyleng-3] = ';'; yytext[yyleng-2] = ' '; yytext[yyleng-1] = '\0';
+\[\[Categoria\:.*\]\][\<|\n|\r] { if (cat == 0) {printf("\nCategorias: ");} yytext[yyleng-3] = ';'; yytext[yyleng-2] = ' '; yytext[yyleng-1] = '\0';
                                                 printf("%s", yytext+12); cat++;}
 
 .|\n {;}
