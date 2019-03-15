@@ -16,7 +16,7 @@ int tit = 0;
 
 %%
 
-"<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 1;}} printf("\n\nARTIGO\nTit: %s \n", yytext+7); x = 1; cat = 0; tit++;} /* imprime título */
+"<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\nARTIGO\nTit: %s \n", yytext+7); x = 1; cat = 0; tit++;} /* imprime título */
 
 \{\{(Info[^"|"]*) { printf("Info: %s \n", yytext+7); BEGIN INFO;} /* imprime cabeçalho da info */
 
@@ -24,7 +24,7 @@ int tit = 0;
 
 <INFO>[\n\r][\| ] { printf("\r");} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
-<INFO>[\n\r][^\|\&] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL; }
+<INFO>[\n\r]*\}\}[\n\r]*/[A-Z\'] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL; }
 
 <INFO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
@@ -45,16 +45,14 @@ int tit = 0;
 
 <RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {;}
 
-<RESUMO>\(\{\{[^ ]*\}\}\) { printf("("); yytext[yyleng-3] = '\0'; int i = 0; while (yytext[i] != '|') { i++;} i++; while (yytext[i] != '|') { i++;}
-                            printf("%s", yytext+i+1); printf(")");
-                        }
+<RESUMO>\(\{\{[^\n]+\}\}\) {;}
 
 <RESUMO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
                         } /* [[Tétis (nereida)|Tétis]] */
 
 
-<RESUMO>[\n\r]+ { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
+<RESUMO>\n|\r { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda de linha e muda o estado */
 
 \[\[Categoria\:.*\]\][\<|\n|\r] { if (cat == 0) {printf("\nCategorias: ");} yytext[yyleng-3] = ';'; yytext[yyleng-2] = ' '; yytext[yyleng-1] = '\0';
                                                 printf("%s", yytext+12); cat++;}
@@ -91,12 +89,18 @@ int main(int argc, char **argv) {
 
     toRead = atoi(argv[1]);
 
+    remove("tp1.tex");
+
     int fd = open("tp1.tex", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
 
     dup2(fd, 1);
 
     beginDocument();
+
     yylex();
+
+    printf("\n\n");
+
     endDocument();
 
     close(fd);
