@@ -39,7 +39,7 @@ int tit = 0;
 <INFO>&amp;nbsp; {;}
 <INFO>&lt;(.*)&gt\; {;}
 
-<INITIAL>^[A-Z\'] { printf("entrou no resumo"); if (x == 1) { if (isupper(yytext[0])) { printf("\nResumo: %s", yytext); } else { printf("\nResumo: ");} BEGIN RESUMO; x = -1; } }
+<INITIAL>^[A-Z\'] { if (x == 1) { if (isupper(yytext[0])) { printf("\nResumo: %s", yytext); } else { printf("\nResumo: ");} BEGIN RESUMO; x = -1; } }
 
 <RESUMO>(\[|\])|\' {;}
 
