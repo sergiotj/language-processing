@@ -18,17 +18,16 @@ int tit = 0;
 
 "<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++;} /* imprime título */
 
-\{\{(Info[^|]*) { printf("Info: %s \n", yytext+7); BEGIN INFO;} /* imprime cabeçalho da info e muda para o estado INFO */
-
-<INFO>[ |]?[ ]?([a-ÿA-z0-9A-Þ _ã]*)[ ]?\= { if (yytext[0] == '|') printf("%s", yytext+1); else printf("%s", yytext);}  /* imprime a parte da esquerda da info */
-
-<INFO>[\n\r][\| ] { printf("\r");}
+\{\{Info[\n\r]+ { printf("Info: %s \n", yytext+7); BEGIN INFO;} /* imprime cabeçalho da info e muda para o estado INFO */
 
 <INFO>[\n\r]*\}\}[\n\r]*/[A-Þ\'\=] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL; }
 
 <INFO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
                         } /* [[Tétis (nereida)|Tétis]] */
+
+<INFO>[ ]\=/[^ ] {printf(" = ");} /* na info, meter espaços onde não tem */
+<INFO>[ ]*\|[ ]*/[ a-ÿA-z0-9A-Þ_ã-]+[ ]*\= {;}
 
 <INFO>\[|\] {;}
 <INFO>\&lt\;ref { ; }
@@ -38,6 +37,9 @@ int tit = 0;
 <INFO>\(.*?\) {;} /* tirar tudo o que é parentesis */
 <INFO>&amp;nbsp; {;}
 <INFO>&lt;(.*)&gt\; {;}
+<INFO>&quot; {;}
+
+<INFO>\_ {printf("-");} /*LATEX*/
 
 <INITIAL>^[A-Z\'] { if (x == 1) { if (isupper(yytext[0])) { printf("\nResumo: %s", yytext); } else { printf("\nResumo: ");} BEGIN RESUMO; x = -1; } }
 
@@ -46,6 +48,8 @@ int tit = 0;
 <RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {;}
 
 <RESUMO>\(\{\{[^\n]+\}\}\) {;}
+
+<RESUMO>&quot; {;}
 
 <RESUMO>&lt;ref { BEGIN LINKS; }
 <LINKS>.|\n|\r {;}
@@ -67,10 +71,10 @@ int tit = 0;
 
 // LATEX ----------
 void beginDocument(){
-	printf("\\documentclass[a4paper]{article}\n\n");
-	printf("\\usepackage[portuguese]{babel}\n\n");
-	printf("\\usepackage[utf8]{inputenc}\n");
-	printf("\\begin{document}\n\n");
+	printf("\\documentclass[a4paper]{article}\n");
+	printf("\\usepackage[portuguese]{babel}\n");
+	printf("\\usepackage[utf8x]{inputenc}\n");
+	printf("\\begin{document}\n");
 }
 
 void endDocument(){
