@@ -767,10 +767,11 @@ int x = -1;
 int cat = 0;
 int toRead;
 int tit = 0;
+int info = 0;
 
 
 
-#line 774 "tp1.c"
+#line 775 "tp1.c"
 
 #define INITIAL 0
 #define INFO 1
@@ -1000,10 +1001,10 @@ YY_DECL
 		}
 
 	{
-#line 17 "tp1.l"
+#line 18 "tp1.l"
 
 
-#line 1007 "tp1.c"
+#line 1008 "tp1.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1087,13 +1088,13 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 19 "tp1.l"
-{ if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++;} /* imprime título */
+#line 20 "tp1.l"
+{ if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++; info = 0;} /* imprime título */
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 21 "tp1.l"
-{ printf("Info: %s \n", yytext+7); BEGIN INFO; printf("entrou no info");} /* imprime cabeçalho da info e muda para o estado INFO */
+#line 22 "tp1.l"
+{ if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO; } info = 1;} /* imprime cabeçalho da info e muda para o estado INFO */
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
@@ -1102,13 +1103,13 @@ YY_LINENO_REWIND_TO(yy_cp - 1);
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 23 "tp1.l"
-{ yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL; printf("saiu do info"); }
+#line 24 "tp1.l"
+{ yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL;}
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 25 "tp1.l"
+#line 26 "tp1.l"
 { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
                         } /* [[Tétis (nereida)|Tétis]] */
@@ -1120,110 +1121,110 @@ YY_LINENO_REWIND_TO(yy_bp + 2);
 (yy_c_buf_p) = yy_cp = yy_bp + 2;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 29 "tp1.l"
+#line 30 "tp1.l"
 {printf(" = ");} /* na info, meter espaços onde não tem */
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 30 "tp1.l"
+#line 31 "tp1.l"
 {;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 32 "tp1.l"
+#line 33 "tp1.l"
 {;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 33 "tp1.l"
+#line 34 "tp1.l"
 { ; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 34 "tp1.l"
+#line 35 "tp1.l"
 {;} /* tirar os ' */
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 35 "tp1.l"
+#line 36 "tp1.l"
 {;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 36 "tp1.l"
+#line 37 "tp1.l"
 {;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 37 "tp1.l"
+#line 38 "tp1.l"
 {;} /* tirar tudo o que é parentesis */
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 38 "tp1.l"
+#line 39 "tp1.l"
 {;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 39 "tp1.l"
+#line 40 "tp1.l"
 {;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 40 "tp1.l"
+#line 41 "tp1.l"
 {;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 42 "tp1.l"
+#line 43 "tp1.l"
 {printf("-");} /*LATEX*/
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 44 "tp1.l"
+#line 45 "tp1.l"
 { if (x == 1) { if (isupper(yytext[0])) { printf("\nResumo: %s", yytext); } else { printf("\nResumo: ");} BEGIN RESUMO; x = -1; } }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 46 "tp1.l"
+#line 47 "tp1.l"
 {;}
 	YY_BREAK
 case 19:
 /* rule 19 can match eol */
 YY_RULE_SETUP
-#line 48 "tp1.l"
+#line 49 "tp1.l"
 {;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 50 "tp1.l"
+#line 51 "tp1.l"
 {;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 52 "tp1.l"
+#line 53 "tp1.l"
 {;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 54 "tp1.l"
+#line 55 "tp1.l"
 { BEGIN LINKS; }
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 55 "tp1.l"
+#line 56 "tp1.l"
 {;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 56 "tp1.l"
+#line 57 "tp1.l"
 {BEGIN RESUMO;}
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 58 "tp1.l"
+#line 59 "tp1.l"
 { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
                         } /* [[Tétis (nereida)|Tétis]] */
@@ -1231,7 +1232,7 @@ YY_RULE_SETUP
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 62 "tp1.l"
+#line 63 "tp1.l"
 { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 	YY_BREAK
 case 27:
@@ -1241,7 +1242,7 @@ YY_LINENO_REWIND_TO(yy_cp - 3);
 (yy_c_buf_p) = yy_cp -= 3;
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
-#line 64 "tp1.l"
+#line 65 "tp1.l"
 { if (cat == 0) { printf("\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0';  }
                                                 printf(" %s;", yytext+12); cat++;
                                                 } /* sacar as categorias e tirar o | que vem às vezes */
@@ -1249,15 +1250,15 @@ YY_RULE_SETUP
 case 28:
 /* rule 28 can match eol */
 YY_RULE_SETUP
-#line 69 "tp1.l"
+#line 70 "tp1.l"
 {;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 70 "tp1.l"
+#line 71 "tp1.l"
 ECHO;
 	YY_BREAK
-#line 1261 "tp1.c"
+#line 1262 "tp1.c"
 			case YY_STATE_EOF(INITIAL):
 			case YY_STATE_EOF(INFO):
 			case YY_STATE_EOF(RESUMO):
@@ -2238,7 +2239,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 70 "tp1.l"
+#line 71 "tp1.l"
 
 
 

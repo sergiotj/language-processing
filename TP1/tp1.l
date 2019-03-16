@@ -8,6 +8,7 @@ int x = -1;
 int cat = 0;
 int toRead;
 int tit = 0;
+int info = 0;
 %}
 
 %x INFO
@@ -16,11 +17,11 @@ int tit = 0;
 
 %%
 
-"<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++;} /* imprime título */
+"<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++; info = 0;} /* imprime título */
 
-\{\{Info(\/[^\n\r]*)?[^\n\r]* { printf("Info: %s \n", yytext+7); BEGIN INFO; } /* imprime cabeçalho da info e muda para o estado INFO */
+\{\{Info(\/[^\n\r]*)?[^\n\r]* { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO; } info = 1;} /* imprime cabeçalho da info e muda para o estado INFO */
 
-<INFO>[\n\r]*\}\}[\n\r]*/[A-Þ\'\=] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL; }
+<INFO>[\n\r]*\}\}[\n\r]*/[A-Þ\'\=] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL;}
 
 <INFO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
