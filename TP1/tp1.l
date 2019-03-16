@@ -18,7 +18,7 @@ int tit = 0;
 
 "<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++;} /* imprime título */
 
-\{\{Info[\n\r]+ { printf("Info: %s \n", yytext+7); BEGIN INFO;} /* imprime cabeçalho da info e muda para o estado INFO */
+\{\{Info(\/[^\n\r]*)?[\n\r]? { printf("Info: %s \n", yytext+7); BEGIN INFO;} /* imprime cabeçalho da info e muda para o estado INFO */
 
 <INFO>[\n\r]*\}\}[\n\r]*/[A-Þ\'\=] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL; }
 
