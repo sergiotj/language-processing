@@ -465,7 +465,7 @@ static yyconst YY_CHAR yy_ec[256] =
 
 static yyconst YY_CHAR yy_meta[44] =
     {   0,
-        1,    2,    3,    4,    1,    3,    1,    1,    5,    1,
+        1,    2,    3,    4,    3,    3,    1,    1,    5,    1,
         1,    1,    1,    6,    3,    1,    7,    7,    7,    7,
         7,    7,    7,    7,    7,    7,    7,    7,    7,    7,
         7,    7,    7,    7,    7,    7,    7,    7,    7,    8,
@@ -1099,7 +1099,7 @@ YY_LINENO_REWIND_TO(yy_cp - 1);
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
 #line 24 "tp1.l"
-{ printf("sair do info"); yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL;}
+{ yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL;}
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
