@@ -9,16 +9,20 @@ int cat = 0;
 int toRead;
 int tit = 0;
 int info = 0;
+
 %}
 
 %x INFO
 %x RESUMO
 %x LINKS
 %x FORMULAS
+%x CATEGORIA
 
 %%
 
-"<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++; info = 0;} /* imprime título */
+"<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++; info = 0; int i = 7;
+                            while(yytext[i]) { if (yytext[i] == ' ') { yytext[i] = '_'; } i++; } printf("\nLink do artigo: https://pt.wikipedia.org/wiki/%s\n", yytext+7);}
+                            /* imprime título */
 
 \{\{Info(\/[^\n\r]*)?[\n\r]/[|] { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO;  info = 1; }} /* imprime cabeçalho da info e muda para o estado INFO */
 
@@ -70,9 +74,15 @@ int info = 0;
 
 <RESUMO>\n|\r { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 
-\[\[Categoria\:.*/\]\][\<|\n|\r] { if (cat == 0) { printf("\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0'; }
+\[\[Categoria\:.*/\]\][\<|\n|\r] { BEGIN CATEGORIA; if (cat == 0) { printf("\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0'; }
                                                 printf(" %s;", yytext+12); cat++;
                                                 } /* sacar as categorias e tirar o | que vem às vezes */
+
+<CATEGORIA><INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
+                        printf("%s", yytext+i+1);
+                        } /* [[Tétis (nereida)|Tétis]] */
+
+<CATEGORIA>.|\n|\r {BEGIN INITIAL;}
 
 .|\n {;}
 %%
