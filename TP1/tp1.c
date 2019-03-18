@@ -2271,21 +2271,38 @@ int yywrap() {
     return 1;
 }
 
+int yyparse (char const *file) {
+
+  yyin = fopen (file, "r");
+
+  if (!yyin) {
+
+      perror ("fopen");
+      exit (EXIT_FAILURE);
+    }
+
+  return 0;
+}
+
 int main(int argc, char **argv) {
 
-    printf("filtragem a começar\n");
-
-    if (argc < 2) {
+    if (argc < 4) {
 
         printf("Não passou os argumentos suficientes à função\n");
         return 0;
     }
 
+    char* file = argv[2];
+    char* fileOutput = argv[3];
+
+    printf("Início de filtragem no ficheiro %s\n", argv[2]);
+
     toRead = atoi(argv[1]);
 
-    remove("tp1.tex");
+    yyin = fopen (file, "r");
 
-    int fd = open("tp1.tex", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+    remove(fileOutput);
+    int fd = open(fileOutput, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
 
     int stdout = dup(1);
     dup2(fd, 1);
@@ -2301,7 +2318,7 @@ int main(int argc, char **argv) {
     close(fd);
 
     dup2(stdout,1);
-    printf("filtragem realizada com sucesso!\n");
+    printf("filtragem realizada com sucesso! Output escrito em %s!\n", fileOutput);
     close(stdout);
 
     return 0;
