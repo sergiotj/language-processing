@@ -14,6 +14,7 @@ int info = 0;
 %x INFO
 %x RESUMO
 %x LINKS
+%x FORMULAS
 
 %%
 
@@ -23,7 +24,7 @@ int info = 0;
 
 <INFO>\}\}[\n\r]*/[A-Þ\'\=&] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL;}
 
-<INFO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
+<INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                         printf("%s", yytext+i+1);
                         } /* [[Tétis (nereida)|Tétis]] */
 
@@ -50,22 +51,28 @@ int info = 0;
 
 <RESUMO>\(\{\{[^\n]+\}\}\) {;}
 
+<RESUMO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
+                                        printf("%s", yytext+i+1);
+                                        }
+<RESUMO>&amp;nbsp;       {;}
+
+<RESUMO>\{\{formatnum:[0-9]*\}\} { yytext[yyleng-2] = '\0'; printf("%s", yytext+12);}
+
 <RESUMO>&quot; {;}
 
 <RESUMO>&lt;ref { BEGIN LINKS; }
 <LINKS>.|\n|\r {;}
 <LINKS>&lt;\/ref&gt; {BEGIN RESUMO;}
 
-<RESUMO>\[\[[ ]*[^ ]+([ ][^ ]+)?[ ]*\|([^ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
-                        printf("%s", yytext+i+1);
-                        } /* [[Tétis (nereida)|Tétis]] */
+<RESUMO>&lt;sub { BEGIN FORMULAS; }
+<FORMULAS>.|\n|\r {;}
+<FORMULAS>&lt;\/sub&gt; {BEGIN RESUMO;}
 
 <RESUMO>\n|\r { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 
-\[\[Categoria\:.*/\]\][\<|\n|\r] { if (cat == 0) { printf("\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0';  }
+\[\[Categoria\:.*/\]\][\<|\n|\r] { if (cat == 0) { printf("\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0'; }
                                                 printf(" %s;", yytext+12); cat++;
                                                 } /* sacar as categorias e tirar o | que vem às vezes */
-
 
 .|\n {;}
 %%

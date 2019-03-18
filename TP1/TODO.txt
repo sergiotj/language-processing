@@ -1,0 +1,6 @@
+ -> {{fmtn
+ -> &amp;nbsp;
+ -> <title>Afeganistão
+ -> {{lang-
+ -> sempre que tem carateres tipo "." "º" "-" nos {{ | }}
+ ->
