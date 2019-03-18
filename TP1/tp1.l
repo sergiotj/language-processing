@@ -64,7 +64,7 @@ int info = 0;
 
 <RESUMO>&quot; {;}
 
-<RESUMO>&lt;ref { BEGIN LINKS; }
+<RESUMO>&lt;[Rr]ef { BEGIN LINKS; }
 <LINKS>.|\n|\r {;}
 <LINKS>&lt;\/ref&gt; {BEGIN RESUMO;}
 
