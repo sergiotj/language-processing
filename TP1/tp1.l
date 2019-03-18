@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
     char* file = argv[2];
     char* fileOutput = argv[3];
 
-    printf("Início de filtragem no ficheiro %s\n", argv[2]);
+    printf("Início de filtragem no ficheiro %s...\n", argv[2]);
 
     toRead = atoi(argv[1]);
 
@@ -141,7 +141,7 @@ int main(int argc, char **argv) {
     close(fd);
 
     dup2(stdout,1);
-    printf("filtragem realizada com sucesso! Output escrito em %s!\n", fileOutput);
+    printf("Filtragem feita em %d artigos! Output escrito em %s!\n", tit, fileOutput);
     close(stdout);
 
     return 0;
