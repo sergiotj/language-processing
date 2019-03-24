@@ -89,14 +89,14 @@ int info = 0;
 
 // LATEX ----------
 void beginDocument(){
-	printf("\\documentclass[a4paper]{article}\n");
-	printf("\\usepackage[portuguese]{babel}\n");
-	printf("\\usepackage[utf8x]{inputenc}\n");
-	printf("\\begin{document}\n");
+	printf("\documentclass[a4paper]{article}\n");
+	printf("\usepackage[portuguese]{babel}\n");
+	printf("\usepackage[utf8x]{inputenc}\n");
+	printf("\begin{document}\n");
 }
 
 void endDocument(){
-	printf("\\end{document}\n");
+	printf("\end{document}\n");
 }
 
 int yywrap() {
@@ -122,6 +122,7 @@ int main(int argc, char **argv) {
     if (argc < 4) {
 
         printf("Não passou os argumentos suficientes à função\n");
+        printf("USAGE: ./tp1 inputFile outputFile \n");
         return 0;
     }
 
