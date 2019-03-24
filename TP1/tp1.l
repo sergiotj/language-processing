@@ -74,7 +74,7 @@ int info = 0;
 
 <RESUMO>\n|\r { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 
-\[\[Categoria\:.*/\]\][\<|\n|\r] { BEGIN CATEGORIA; if (cat == 0) { printf("\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0'; }
+\[\[Categoria\:.*/\]\][\<|\n|\r] { BEGIN CATEGORIA; if (cat == 0) { printf("\n\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0'; }
                                                 printf(" %s;", yytext+12); cat++;
                                                 } /* sacar as categorias e tirar o | que vem às vezes */
 

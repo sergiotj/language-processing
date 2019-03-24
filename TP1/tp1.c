@@ -1309,7 +1309,7 @@ YY_LINENO_REWIND_TO(yy_cp - 3);
 YY_DO_BEFORE_ACTION; /* set up yytext again */
 YY_RULE_SETUP
 #line 77 "tp1.l"
-{ BEGIN CATEGORIA; if (cat == 0) { printf("\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0'; }
+{ BEGIN CATEGORIA; if (cat == 0) { printf("\n\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0'; }
                                                 printf(" %s;", yytext+12); cat++;
                                                 } /* sacar as categorias e tirar o | que vem às vezes */
 	YY_BREAK
@@ -2360,7 +2360,7 @@ int main(int argc, char **argv) {
     if (argc < 4) {
 
         printf("Não passou os argumentos suficientes à função\n");
-        printf("USAGE: ./tp1 inputFile outputFile \n");
+        printf("USAGE: ./tp1 nrLinhas inputFile outputFile \n");
         return 0;
     }
 
