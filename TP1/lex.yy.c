@@ -1,6 +1,5 @@
-#line 2 "tp1.c"
 
-#line 4 "tp1.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -802,7 +801,7 @@ int info = 0;
 
 
 
-#line 806 "tp1.c"
+#line 805 "lex.yy.c"
 
 #define INITIAL 0
 #define INFO 1
@@ -1037,7 +1036,7 @@ YY_DECL
 #line 21 "tp1.l"
 
 
-#line 1041 "tp1.c"
+#line 1040 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1338,7 +1337,7 @@ YY_RULE_SETUP
 #line 88 "tp1.l"
 ECHO;
 	YY_BREAK
-#line 1342 "tp1.c"
+#line 1341 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 			case YY_STATE_EOF(INFO):
 			case YY_STATE_EOF(RESUMO):
@@ -2327,14 +2326,14 @@ void yyfree (void * ptr )
 
 // LATEX ----------
 void beginDocument(){
-	printf("\\documentclass[a4paper]{article}\n");
-	printf("\\usepackage[portuguese]{babel}\n");
-	printf("\\usepackage[utf8x]{inputenc}\n");
-	printf("\\begin{document}\n");
+	printf("\documentclass[a4paper]{article}\n");
+	printf("\usepackage[portuguese]{babel}\n");
+	printf("\usepackage[utf8x]{inputenc}\n");
+	printf("\begin{document}\n");
 }
 
 void endDocument(){
-	printf("\\end{document}\n");
+	printf("\end{document}\n");
 }
 
 int yywrap() {
