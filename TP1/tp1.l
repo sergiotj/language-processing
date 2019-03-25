@@ -14,9 +14,16 @@ int info = 0;
 
 %x INFO
 %x RESUMO
+%x CATEGORIA
 %x LINKS
 %x FORMULAS
-%x CATEGORIA
+%x SMALL
+%x SUP
+%x MATH
+%x EXTRA
+%x NOWIKI
+%x U
+%x BR
 
 %%
 
@@ -62,15 +69,43 @@ int info = 0;
 
 <RESUMO>\{\{formatnum:[0-9]*\}\} { yytext[yyleng-2] = '\0'; printf("%s", yytext+12);}
 
-<RESUMO>&quot; {;}
+<RESUMO>&quot; 			{;}
 
-<RESUMO>&lt;[Rr]ef { BEGIN LINKS; }
+<RESUMO>&lt;[Rr]ef 		{ BEGIN LINKS; }
 <LINKS>.|\n|\r {;}
-<LINKS>&lt;\/ref&gt; {BEGIN RESUMO;}
+<LINKS>&lt;\/ref&gt;    { BEGIN RESUMO; }
 
-<RESUMO>&lt;sub { BEGIN FORMULAS; }
+<RESUMO>&lt;sub 		{ BEGIN FORMULAS; }
 <FORMULAS>.|\n|\r {;}
-<FORMULAS>&lt;\/sub&gt; {BEGIN RESUMO;}
+<FORMULAS>&lt;\/sub&gt; { BEGIN RESUMO; }
+
+<RESUMO>&lt;small 	    { BEGIN SMALL; }
+<SMALL>.|\n|\r {;}
+<SMALL>&lt;\/small&gt;  { BEGIN RESUMO; }
+
+<RESUMO>&lt;sup 	    { BEGIN SUP; }
+<SUP>.|\n|\r {;}
+<SUP>&lt;\/sup&gt; 		{ BEGIN RESUMO; }
+
+<RESUMO>&lt;math 	    { BEGIN MATH; }
+<MATH>.|\n|\r {;}
+<MATH>&lt;\/math&gt; 	{ BEGIN RESUMO; }
+
+<RESUMO>&lt;\!\-\- 	    { BEGIN EXTRA; } /* Nem sequer aparece no wiki */
+<EXTRA>.|\n|\r {;}
+<EXTRA>\-\-&gt; 		{ BEGIN RESUMO; }
+
+<RESUMO>&lt;nowiki 	    	{ BEGIN NOWIKI; }
+<NOWIKI>.|\n|\r {;}
+<NOWIKI>[\nowiki]?[/]?&gt; 	{ BEGIN RESUMO; }
+
+<RESUMO>&lt;u&gt; 	    { BEGIN U; }
+<U>.|\n|\r				{ printf("%s", yytext); }
+<U>&lt\;\/u&gt;			{ BEGIN RESUMO; }
+
+<RESUMO>&lt;br 			{ BEGIN BR; }
+<BR>.|\n|\r 			{ ;}
+<BR>[ ]?[/]?&gt			{ BEGIN RESUMO; }
 
 <RESUMO>\n|\r { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 

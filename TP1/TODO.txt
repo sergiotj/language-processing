@@ -3,4 +3,5 @@
  -> <title>Afeganistão
  -> {{lang-
  -> sempre que tem carateres tipo "." "º" "-" nos {{ | }}
- ->
+ -> Carralcova
+ -> Entradas nos INFO
