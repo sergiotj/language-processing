@@ -33,16 +33,15 @@ int info = 0;
                             while(yytext[i]) { if (yytext[i] == ' ') { yytext[i] = '_'; } i++; } printf("\nLink do artigo: https://pt.wikipedia.org/wiki/%s\n", yytext+7);}
                             /* imprime título */
 
-\{\{Info(\/[^\n\r]*)?[\n\r]/[|] { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO;  info = 1; }} /* imprime cabeçalho da info e muda para o estado INFO */
+\{\{Info\/.*\n/[ ]?\| { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO;  info = 1; }} /* imprime cabeçalho da info e muda para o estado INFO */
 
-<INFO>\}\}[\n\r]*/[A-Þ\'\=&] { yytext[yyleng-2] = '\0'; printf("\n"); BEGIN INITIAL;}
-
-<INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
-                        printf("%s", yytext+i+1);
-                        } /* [[Tétis (nereida)|Tétis]] */
+<INFO>\}\}[\n\r][\n\r]?/[A-Z\'\=&\[] { BEGIN INITIAL;}
+<INFO>^\}\} { BEGIN INITIAL; }
 
 <INFO>[ ]\=/[^ ] {printf(" = ");} /* na info, meter espaços onde não tem */
 <INFO>[ ]*\|[ ]*/[ a-ÿA-z0-9A-Þ_ã-]+[ ]*\= {;}
+
+<INFO>\[\[[^\|\n\r]*\|[^\|\n\r\]]*\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;} printf("%s", yytext+i+1); } /* [[Tétis (nereida)|Tétis]] */
 
 <INFO>\[|\] {;}
 <INFO>\&lt\;ref { ; }
@@ -63,7 +62,7 @@ int info = 0;
 
 <RESUMO>(\[|\])|\' {;}
 
-<RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {;}
+<INITIAL><RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {;}
 
 
 <RESUMO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
