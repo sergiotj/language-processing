@@ -1,7 +1,8 @@
- -> {{fmtn
- -> &amp;nbsp;
- -> <title>Afeganistão
+ -> {{fmtn - Só faltam 3 casos
+ -> {{tooltip - 3 casos especiais
  -> {{lang-
+ -> {{dtlink
+ -> &amp;nbsp;
  -> sempre que tem carateres tipo "." "º" "-" nos {{ | }}
  -> Carralcova
  -> Entradas nos INFO

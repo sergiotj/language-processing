@@ -24,6 +24,8 @@ int info = 0;
 %x NOWIKI
 %x U
 %x BR
+%x FMTNRES
+%x FMTNINFO
 
 %%
 
@@ -51,6 +53,10 @@ int info = 0;
 <INFO>&amp;nbsp; {;}
 <INFO>&lt;(.*)&gt\; {;}
 <INFO>&quot; {;}
+<INFO>\{\{formatnum:[0-9]*\}\} { yytext[yyleng-2] = '\0'; printf("%s", yytext+12); }
+<INFO>\{\{fmtn\|([0-9]*)\}\} {yytext[yyleng-2]='\0'; printf("%s", yytext+7);}
+<INFO>\{\{tooltip\|[ ]?([0-9]*[,]?[ ]?)*\[\[[A-Za-zÀ-ÖÙ-öù-ÿ]*\]\]\|([0-9]*[ ]?)*\}\}  { int i = 0; while(yytext[i] != ']') i++; yytext[yyleng-2]='\0'; printf("%s", yytext+i+3); }
+<INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|\*\]\] {;}
 
 <INFO>\_ {printf("-");} /*LATEX*/
 
@@ -106,6 +112,12 @@ int info = 0;
 <RESUMO>&lt;br 			{ BEGIN BR; }
 <BR>.|\n|\r 			{ ;}
 <BR>[ ]?[/]?&gt			{ BEGIN RESUMO; }
+
+<RESUMO>\{\{[Ff]mtn[\|]?[ ]?[\|]?       { BEGIN FMTNRES; }
+<FMTNRES>\|\[\[([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\|([A-Za-zÀ-ÖÙ-öù-ÿ² ]*)?\]\] { int i = 1; while(yytext[i] != '|') i++;
+                                                                    yytext[yyleng-2]='\0'; printf("%s", yytext+i+1); }
+<FMTNRES>[0-9]*               { printf("%s", yytext); }
+<FMTNRES>\}\}                 { BEGIN RESUMO; }
 
 <RESUMO>\n|\r { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 
