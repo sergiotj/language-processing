@@ -48,7 +48,6 @@ int info = 0;
 <INFO>\&lt\;ref { ; }
 <INFO>\' {;} /* tirar os ' */
 <INFO>&lt;br&gt; {;}
-<INFO>\{\{[A-z]*\}\}[ ] {;}
 <INFO>\(.*?\) {;} /* tirar tudo o que é parentesis */
 <INFO>&amp;nbsp; {;}
 <INFO>&lt;(.*)&gt\; {;}
@@ -66,7 +65,6 @@ int info = 0;
 
 <RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {;}
 
-<RESUMO>\(\{\{[^\n]+\}\}\) {;}
 
 <RESUMO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                                         printf("%s", yytext+i+1);
@@ -77,9 +75,10 @@ int info = 0;
 
 <RESUMO>&quot; 			{;}
 
-<RESUMO>&lt;[Rr]ef 		{ BEGIN LINKS; }
-<LINKS>.|\n|\r {;}
-<LINKS>&lt;\/ref&gt;    { BEGIN RESUMO; }
+<RESUMO>&lt;[Rr][Ee][Ff]		{ BEGIN LINKS; }
+<LINKS>. {;}
+<LINKS>\n|\r    { BEGIN RESUMO; }
+<LINKS>&lt;\/[Rr][Ee][Ff]&gt;    { BEGIN RESUMO; }
 
 <RESUMO>&lt;sub 		{ BEGIN FORMULAS; }
 <FORMULAS>.|\n|\r {;}
