@@ -64,6 +64,8 @@ int info = 0;
 
 <INITIAL><RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {;}
 
+<INFO>\{\{[Ll]ang[^\}]*\}\};? {;}
+<RESUMO>\{\{[Ll]ang[^\}]*\}\};? {;}
 
 <RESUMO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
                                         printf("%s", yytext+i+1);
