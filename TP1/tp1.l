@@ -26,6 +26,8 @@ int info = 0;
 %x BR
 %x FMTNRES
 %x FMTNINFO
+%x TOOLTIP
+%x IMAGEM
 
 %%
 
@@ -43,6 +45,7 @@ int info = 0;
 
 <INFO>\[\[[^\|\n\r]*\|[^\|\n\r\]]*\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;} printf("%s", yytext+i+1); } /* [[Tétis (nereida)|Tétis]] */
 
+
 <INFO>\[|\] {;}
 <INFO>\&lt\;ref { ; }
 <INFO>\' {;} /* tirar os ' */
@@ -53,10 +56,29 @@ int info = 0;
 <INFO>&quot; {;}
 <INFO>\{\{formatnum:[0-9]*\}\} { yytext[yyleng-2] = '\0'; printf("%s", yytext+12); }
 <INFO>\{\{fmtn\|([0-9]*)\}\} {yytext[yyleng-2]='\0'; printf("%s", yytext+7);}
-<INFO>\{\{tooltip\|[ ]?([0-9]*[,]?[ ]?)*\[\[[A-Za-zÀ-ÖÙ-öù-ÿ]*\]\]\|([0-9]*[ ]?)*\}\}  { int i = 0; while(yytext[i] != ']') i++; yytext[yyleng-2]='\0'; printf("%s", yytext+i+3); }
 <INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|\*\]\] {;}
 
 <INFO>\_ {printf("-");} /*LATEX*/
+
+<INFO>\{\{[Tt]ooltip\|  		  		{ BEGIN TOOLTIP; } 
+<INFO>\{\{[Tt]ooltip[ ]num[ ]?\|  		{ BEGIN TOOLTIP; }
+<TOOLTIP>. 			  					{ ; }
+<TOOLTIP>\{\{fmtn\|[0-9]*[.][0-9]*\|\[\[bilhões\]\]\}\} { ;}
+<TOOLTIP>\{\{sfn\|FMI\|[0-9]*\}\} 		{ ;}
+<TOOLTIP>\|[$]?([0-9]*[ ]?[,]?[.]?)*\}	{ yytext[yyleng-1]='\0'; printf("%s",yytext+1);}
+<TOOLTIP>\n|\r 							{ BEGIN INFO; }
+<TOOLTIP>\}\}				  			{ BEGIN INFO; }
+
+<INFO>\{\{[Ff]mtn[\|]?[ ]?[\|]?       { BEGIN FMTNINFO; }
+<FMTNINFO>\|\[\[([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\|([A-Za-zÀ-ÖÙ-öù-ÿ² ]*)?\]\] { int i = 1; while(yytext[i] != '|') i++;
+                                                                    yytext[yyleng-2]='\0'; printf("%s", yytext+i+1); }
+<FMTNINFO>[0-9]*               { printf("%s", yytext); }
+<FMTNINFO>\}\}                 { BEGIN INFO; }
+
+<INFO>\[\[Imagem\:		{ 	BEGIN IMAGEM; }
+<IMAGEM>.				{ ; }
+<IMAGEM>\n|\r 			{ BEGIN INFO; }
+<IMAGEM>\]\]			{ BEGIN	INFO; }				
 
 <INITIAL>^[A-Z\'] { if (x == 1) { if (isupper(yytext[0])) { printf("\nResumo: %s", yytext); } else { printf("\nResumo: ");} BEGIN RESUMO; x = -1; } }
 

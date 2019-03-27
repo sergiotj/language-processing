@@ -1,8 +1,11 @@
- -> {{fmtn - Só faltam 3 casos
- -> {{tooltip - 3 casos especiais
- -> {{lang-
- -> {{dtlink
- -> &amp;nbsp;
- -> sempre que tem carateres tipo "." "º" "-" nos {{ | }}
- -> Carralcova
- -> Entradas nos INFO
+-> {{BRA}} -> "tag" dos paises
+-> {{dni|19|1|1884|sem idade}}
+-> {{morte|13|3|1949|19|1|1884}}
+-> {{lang-
+-> {{dtlink
+-> Nome nativo do Butão
+
+Para o relatório: 
+ -> Caso especial (Não vale a pena corrigir isto) -> Butão -> {{Tooltip num|4.257|1 000 000 000|bilhões|9|4257000000|[[USD]]}}
+ -> Caso especial (Ficou a trabalhar) -> Siria -> <TOOLTIP>\{\{fmtn\|[0-9]*[.][0-9]*\|\[\[bilhões\]\]\}\} { ;}
+ -> Caso especial (FIcou a trabalhar) -> Indonésia -> <TOOLTIP>\{\{sfn\|FMI\|[0-9]*\}\} 		({{sfn|FMI|2014}})
