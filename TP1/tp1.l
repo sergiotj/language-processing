@@ -31,10 +31,10 @@ int info = 0;
 %%
 
 \<title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++; info = 0; int i = 7;
-                            while(yytext[i]) { if (yytext[i] == ' ') { yytext[i] = '_'; } i++; } printf("\nLink do artigo: https://pt.wikipedia.org/wiki/%s\n", yytext+7);}
+                            while(yytext[i]) { if (yytext[i] == ' ') { yytext[i] = '_'; } i++; } printf("\nLink do artigo: https://pt.wikipedia.org/wiki/%s \\newline \n", yytext+7);}
                             /* imprime título */
 
-\{\{Info(\/)?.*\n/[ ]?\| { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO;  info = 1;}} /* imprime cabeçalho da info e muda para o estado INFO */
+\{\{Info(\/)?.*\n/[ ]?\| { if (info == 0) {printf("Info: %s\n", yytext+7); BEGIN INFO;  info = 1;}} /* imprime cabeçalho da info e muda para o estado INFO */
 
 <INFO>\}\}[\n\r][\n\r]?/[A-Z\'\=&\[] { BEGIN INITIAL;}
 <INFO>^\}\} { BEGIN INITIAL; }
@@ -66,6 +66,8 @@ int info = 0;
                                                                     yytext[yyleng-2]='\0'; printf("%s", yytext+i+1); }
 <INFO>\[\[([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\]\]	{ yytext[yyleng-2]='\0'; printf("%s", yytext+2);}
 <INFO>\_ {printf("-");} /*LATEX*/
+
+<INFO>\n|\r {printf(" \\newline\n");} /*LATEX*/
 
 <INFO>\{\{[Tt]ooltip\|  		  		{ BEGIN TOOLTIP; }
 <INFO>\{\{[Tt]ooltip[ ]num[ ]?\|  		{ BEGIN TOOLTIP; }
