@@ -164,14 +164,14 @@ int info = 0;
 												}
 												if(yytext[i]=='|') {
 													yytext[yyleng-4] = '\0';
-                                                	printf(" %s;", yytext+12);
-                                                	cat++;
+                          printf(" %s;", yytext+12);
+                          cat++;
 												} else {
 													yytext[yyleng-2] = '\0';
 													printf(" %s;", yytext+12);
 													cat++;
 												}
-                                 }
+                      }
 .|\n { ; }
 %%
 
