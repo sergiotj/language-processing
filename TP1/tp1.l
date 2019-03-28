@@ -79,9 +79,10 @@ int info = 0;
 <TOOLTIP>\}\}				  			{ BEGIN INFO; }
 
 <INFO>\{\{[Ff]mtn[\|]?[ ]?[\|]?       { BEGIN FMTNINFO; }
-<FMTNINFO>\|\[\[([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\|([A-Za-zÀ-ÖÙ-öù-ÿ² ]*)?\]\] { int i = 1; while(yytext[i] != '|') i++;
+<FMTNINFO>\|\[\[([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\|([A-Za-zÀ-ÖÙ-öù-ÿ²./ ]*)?\]\] { int i = 1; while(yytext[i] != '|') i++;
                                                                     yytext[yyleng-2]='\0'; printf("%s", yytext+i+1); }
 <FMTNINFO>[0-9]*               { printf("%s", yytext); }
+<FMTNINFO>\|([A-Za-zÀ-ÖÙ-öù-ÿ²./$ ]*)?\}\}  { yytext[yyleng-2]='\0'; printf("%s", yytext+1); BEGIN INFO;}
 <FMTNINFO>\}\}                 { BEGIN INFO; }
 
 <INFO>\[\[Imagem\:		{ 	BEGIN IMAGEM; }
@@ -145,10 +146,13 @@ int info = 0;
 <BR>[ ]?[/]?&gt			{ BEGIN RESUMO; }
 
 <RESUMO>\{\{[Ff]mtn[\|]?[ ]?[\|]?       { BEGIN FMTNRES; }
-<FMTNRES>\|\[\[([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\|([A-Za-zÀ-ÖÙ-öù-ÿ² ]*)?\]\] { int i = 1; while(yytext[i] != '|') i++;
+<FMTNRES>\|\[\[([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\|([A-Za-zÀ-ÖÙ-öù-ÿ²./ ]*)?\]\] { int i = 1; while(yytext[i] != '|') i++;
                                                                     yytext[yyleng-2]='\0'; printf("%s", yytext+i+1); }
-<FMTNRES>[0-9]*               { printf("%s", yytext); }
-<FMTNRES>\}\}                 { BEGIN RESUMO; }
+<FMTNRES>[0-9]*                             { printf("%s", yytext); }
+<FMTNRES>\|\[\[km\]\]                       { yytext[yyleng-2]='\0'; printf("%s", yytext+3); }
+<FMTNRES>\|\[\[quilômetro\]\]               { yytext[yyleng-2]='\0'; printf("%s", yytext+3); }
+<FMTNRES>\|([A-Za-zÀ-ÖÙ-öù-ÿ²./ ]*)?\}\}    { yytext[yyleng-2]='\0'; printf("%s", yytext+1); BEGIN RESUMO;}
+<FMTNRES>\}\}                               { BEGIN RESUMO; }
 
 <RESUMO>\[|\] {;}
 <RESUMO>\{|\} {;}
@@ -167,9 +171,9 @@ int info = 0;
 													i++;
 												}
 												if(yytext[i]=='|') {
-													yytext[yyleng-4] = '\0';
-                          printf(" %s;", yytext+12);
-                          cat++;
+													yytext[i] = '\0';
+                                                    printf(" %s;", yytext+12);
+                          							cat++;
 												} else {
 													yytext[yyleng-2] = '\0';
 													printf(" %s;", yytext+12);
