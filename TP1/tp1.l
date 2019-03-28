@@ -14,7 +14,6 @@ int info = 0;
 
 %x INFO
 %x RESUMO
-%x CATEGORIA
 %x LINKS
 %x FORMULAS
 %x SMALL
@@ -35,7 +34,7 @@ int info = 0;
                             while(yytext[i]) { if (yytext[i] == ' ') { yytext[i] = '_'; } i++; } printf("\nLink do artigo: https://pt.wikipedia.org/wiki/%s\n", yytext+7);}
                             /* imprime título */
 
-\{\{Info\/.*\n/[ ]?\| { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO;  info = 1; }} /* imprime cabeçalho da info e muda para o estado INFO */
+\{\{Info\/.*\n/[ ]?\| { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO;  info = 1;}} /* imprime cabeçalho da info e muda para o estado INFO */
 
 <INFO>\}\}[\n\r][\n\r]?/[A-Z\'\=&\[] { BEGIN INITIAL;}
 <INFO>^\}\} { BEGIN INITIAL; }
@@ -43,8 +42,7 @@ int info = 0;
 <INFO>[ ]\=/[^ ] {printf(" = ");} /* na info, meter espaços onde não tem */
 <INFO>[ ]*\|[ ]*/[ a-ÿA-z0-9A-Þ_ã-]+[ ]*\= {;}
 
-<INFO>\[\[[^\|\n\r]*\|[^\|\n\r\]]*\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;} printf("%s", yytext+i+1); } /* [[Tétis (nereida)|Tétis]] */
-
+<INFO>\[\[([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\|([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;} printf("%s", yytext+i+1); } /* [[Tétis (nereida)|Tétis]] */
 
 <INFO>\[|\] {;}
 <INFO>\&lt\;ref { ; }
@@ -54,10 +52,12 @@ int info = 0;
 <INFO>&amp;nbsp; {;}
 <INFO>&lt;(.*)&gt\; {;}
 <INFO>&quot; {;}
-<INFO>\{\{formatnum:[0-9]*\}\} { yytext[yyleng-2] = '\0'; printf("%s", yytext+12); }
-<INFO>\{\{fmtn\|([0-9]*)\}\} {yytext[yyleng-2]='\0'; printf("%s", yytext+7);}
-<INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|\*\]\] {;}
-
+<INFO>\{\{formatnum:[0-9]*\}\} 		{ yytext[yyleng-2] = '\0'; printf("%s", yytext+12); }
+<INFO>\{\{fmtn\|([0-9]*)\}\} 		{ yytext[yyleng-2]='\0'; printf("%s", yytext+7);}
+<INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|\*\]\] 	{ ; }
+<INFO>\{\{small[ ]?\|[ ]?\(([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\)[ ]?\}\}		{ int i = 1; while(yytext[i] != '|') i++;
+                                                                    yytext[yyleng-2]='\0'; printf("%s", yytext+i+1); }
+<INFO>\[\[([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\]\]	{ yytext[yyleng-2]='\0'; printf("%s", yytext+2);}
 <INFO>\_ {printf("-");} /*LATEX*/
 
 <INFO>\{\{[Tt]ooltip\|  		  		{ BEGIN TOOLTIP; } 
@@ -141,19 +141,24 @@ int info = 0;
 <FMTNRES>[0-9]*               { printf("%s", yytext); }
 <FMTNRES>\}\}                 { BEGIN RESUMO; }
 
-<RESUMO>\n|\r { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
+<RESUMO>\n|\r 				  { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 
-\[\[Categoria\:.*/\]\][\<|\n|\r] { BEGIN CATEGORIA; if (cat == 0) { printf("\n\nCategorias:"); } if (yytext[yyleng-2] == '|') { yytext[yyleng-2] = '\0'; }
-                                                printf(" %s;", yytext+12); cat++;
-                                                } /* sacar as categorias e tirar o | que vem às vezes */
-
-<CATEGORIA><INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
-                        printf("%s", yytext+i+1);
-                        } /* [[Tétis (nereida)|Tétis]] */
-
-<CATEGORIA>.|\n|\r {BEGIN INITIAL;}
-
-.|\n {;}
+\[\[Categoria\:([A-Za-zÀ-ÖÙ-öù-ÿ -.º|]*)\]\] {  if (cat==0) { printf("\n\nCategorias:"); }
+												int i = 0;
+												while (yytext[i]!='|' && yytext[i]!=']') {
+													i++;
+												}
+												if(yytext[i]=='|') {
+													yytext[yyleng-4] = '\0'; 
+                                                	printf(" %s;", yytext+12);
+                                                	cat++;
+												} else {
+													yytext[yyleng-2] = '\0';
+													printf(" %s;", yytext+12);
+													cat++;
+												}
+                                 }
+.|\n { ; }
 %%
 
 // LATEX ----------
