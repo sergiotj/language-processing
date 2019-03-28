@@ -27,14 +27,15 @@ int info = 0;
 %x FMTNINFO
 %x TOOLTIP
 %x IMAGEM
+%x NOWRAP
 
 %%
 
-"<"title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++; info = 0; int i = 7;
+\<title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++; info = 0; int i = 7;
                             while(yytext[i]) { if (yytext[i] == ' ') { yytext[i] = '_'; } i++; } printf("\nLink do artigo: https://pt.wikipedia.org/wiki/%s\n", yytext+7);}
                             /* imprime título */
 
-\{\{Info\/.*\n/[ ]?\| { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO;  info = 1;}} /* imprime cabeçalho da info e muda para o estado INFO */
+\{\{Info(\/)?.*\n/[ ]?\| { if (info == 0) {printf("Info: %s \n", yytext+7); BEGIN INFO;  info = 1;}} /* imprime cabeçalho da info e muda para o estado INFO */
 
 <INFO>\}\}[\n\r][\n\r]?/[A-Z\'\=&\[] { BEGIN INITIAL;}
 <INFO>^\}\} { BEGIN INITIAL; }
@@ -45,10 +46,16 @@ int info = 0;
 <INFO>\[\[([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\|([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;} printf("%s", yytext+i+1); } /* [[Tétis (nereida)|Tétis]] */
 
 <INFO>\[|\] {;}
+<INFO>\{|\} {;}
+<INFO>\{\{nowrap {;}
+<INFO>\{\{dni
+<INFO>\| { printf(" "); }
+<INFO>lang\=[pb][tr] { ; }
+<INFO>\|si\}\} { ; }
+
 <INFO>\&lt\;ref { ; }
 <INFO>\' {;} /* tirar os ' */
 <INFO>&lt;br&gt; {;}
-<INFO>\(.*?\) {;} /* tirar tudo o que é parentesis */
 <INFO>&amp;nbsp; {;}
 <INFO>&lt;(.*)&gt\; {;}
 <INFO>&quot; {;}
@@ -60,7 +67,7 @@ int info = 0;
 <INFO>\[\[([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\]\]	{ yytext[yyleng-2]='\0'; printf("%s", yytext+2);}
 <INFO>\_ {printf("-");} /*LATEX*/
 
-<INFO>\{\{[Tt]ooltip\|  		  		{ BEGIN TOOLTIP; } 
+<INFO>\{\{[Tt]ooltip\|  		  		{ BEGIN TOOLTIP; }
 <INFO>\{\{[Tt]ooltip[ ]num[ ]?\|  		{ BEGIN TOOLTIP; }
 <TOOLTIP>. 			  					{ ; }
 <TOOLTIP>\{\{fmtn\|[0-9]*[.][0-9]*\|\[\[bilhões\]\]\}\} { ;}
@@ -78,7 +85,7 @@ int info = 0;
 <INFO>\[\[Imagem\:		{ 	BEGIN IMAGEM; }
 <IMAGEM>.				{ ; }
 <IMAGEM>\n|\r 			{ BEGIN INFO; }
-<IMAGEM>\]\]			{ BEGIN	INFO; }				
+<IMAGEM>\]\]			{ BEGIN	INFO; }
 
 <INITIAL>^[A-Z\'] { if (x == 1) { if (isupper(yytext[0])) { printf("\nResumo: %s", yytext); } else { printf("\nResumo: ");} BEGIN RESUMO; x = -1; } }
 
@@ -141,6 +148,14 @@ int info = 0;
 <FMTNRES>[0-9]*               { printf("%s", yytext); }
 <FMTNRES>\}\}                 { BEGIN RESUMO; }
 
+<RESUMO>\[|\] {;}
+<RESUMO>\{|\} {;}
+<RESUMO>\{\{nowrap {;}
+<RESUMO>\{\{dni
+<RESUMO>\| { printf(" "); }
+<RESUMO>lang\=[pb][tr] { ; }
+<RESUMO>\|si\}\} { ; }
+
 <RESUMO>\n|\r 				  { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 
 \[\[Categoria\:([A-Za-zÀ-ÖÙ-öù-ÿ -.º|]*)\]\] {  if (cat==0) { printf("\n\nCategorias:"); }
@@ -149,7 +164,7 @@ int info = 0;
 													i++;
 												}
 												if(yytext[i]=='|') {
-													yytext[yyleng-4] = '\0'; 
+													yytext[yyleng-4] = '\0';
                                                 	printf(" %s;", yytext+12);
                                                 	cat++;
 												} else {
