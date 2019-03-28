@@ -46,8 +46,9 @@ int info = 0;
 
 <INFO>\[|\] {;}
 <INFO>\{|\} {;}
-<INFO>\{\{nowrap {;}
-<INFO>\{\{dni
+<INFO>\{\{[Nn]owrap {;}
+<INFO>\{\{[Dd]ni
+<INFO>\{\{[Dd]tlink
 <INFO>\| { printf(" "); }
 <INFO>lang\=[pb][tr] { ; }
 <INFO>\|si\}\} { ; }
@@ -149,8 +150,9 @@ int info = 0;
 
 <RESUMO>\[|\] {;}
 <RESUMO>\{|\} {;}
-<RESUMO>\{\{nowrap {;}
-<RESUMO>\{\{dni
+<RESUMO>\{\{[Nn]owrap {;}
+<RESUMO>\{\{[Dd]ni
+<RESUMO>\{\{[Dd]tlink
 <RESUMO>\| { printf(" "); }
 <RESUMO>lang\=[pb][tr] { ; }
 <RESUMO>\|si\}\} { ; }
