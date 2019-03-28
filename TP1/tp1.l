@@ -27,7 +27,6 @@ int info = 0;
 %x FMTNINFO
 %x TOOLTIP
 %x IMAGEM
-%x NOWRAP
 
 %%
 
