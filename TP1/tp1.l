@@ -69,6 +69,9 @@ int info = 0;
 <INFO>\{\{small[ ]?\|[ ]?\(([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\)[ ]?\}\}		{ int i = 1; while(yytext[i] != '|') i++;
                                                                     yytext[yyleng-2]='\0'; printf("%s", yytext+i+1); }
 <INFO>\[\[([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\]\]	{ yytext[yyleng-2]='\0'; printf("%s", yytext+2);}
+
+<INFO>\{\{[Ll]ang[^\}]*\}\};? {;}
+
 <INFO>\_ {printf("-");} /*LATEX*/
 
 <INFO>\n|\r {printf(" \\newline\n");} /*LATEX*/
@@ -100,7 +103,6 @@ int info = 0;
 
 <INITIAL><RESUMO>\[\[Imagem:.*[.]\]\][\n|\r] {;}
 
-<INFO>\{\{[Ll]ang[^\}]*\}\};? {;}
 <RESUMO>\{\{[Ll]ang[^\}]*\}\};? {;}
 
 <RESUMO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0'; int i = 0; while (yytext[i] != '|') { i++;}
