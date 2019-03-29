@@ -4,7 +4,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-int x = -1;
+int flag = -1;
 int cat = 0;
 int toRead;
 int tit = 0;
@@ -30,7 +30,7 @@ int info = 0;
 
 %%
 
-\<title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); x = 1; cat = 0; tit++; info = 0; int i = 7;
+\<title>[^<]* { if (toRead != 0) {if(tit == toRead) {return 0;}} printf("\n\n\\section{%s} \n", yytext+7); flag = 1; cat = 0; tit++; info = 0; int i = 7;
                             while(yytext[i]) { if (yytext[i] == ' ') { yytext[i] = '_'; } i++; } printf("\nLink do artigo: \\url{https://pt.wikipedia.org/wiki/%s}\\newline\n", yytext+7);}
                             /* imprime título */
 
@@ -97,7 +97,7 @@ int info = 0;
 <IMAGEM>\n|\r 			{ BEGIN INFO; }
 <IMAGEM>\]\]			{ BEGIN	INFO; }
 
-<INITIAL>^[A-Z\'] { if (x == 1) { if (isupper(yytext[0])) { printf("\nResumo: %s", yytext); } else { printf("\nResumo: ");} BEGIN RESUMO; x = -1; } }
+<INITIAL>^[A-Z\'] { if (flag == 1) { if (isupper(yytext[0])) { printf("\nResumo: %s", yytext); } else { printf("\nResumo: ");} BEGIN RESUMO; flag = -1; } }
 
 <RESUMO>(\[|\])|\' {;}
 
@@ -171,15 +171,15 @@ int info = 0;
 
 <RESUMO>\n|\r 				  { BEGIN INITIAL;} /* QUANDO ENCONTRA MUDANÇA DE LINHA, muda o estado */
 
-\[\[Categoria\:([A-Za-zÀ-ÖÙ-öù-ÿ -.º|]*)\]\] {  if (cat==0) { printf("\n\nCategorias:"); }
+\[\[Categoria\:([A-Za-zÀ-ÖÙ-öù-ÿ -.º|]*)\]\] {  if (cat == 0) { printf("\n\nCategorias:"); }
 												int i = 0;
 												while (yytext[i]!='|' && yytext[i]!=']') {
 													i++;
 												}
 												if(yytext[i]=='|') {
 													yytext[i] = '\0';
-                                                    printf(" %s;", yytext+12);
-                          							cat++;
+                          printf(" %s;", yytext+12);
+                          cat++;
 												} else {
 													yytext[yyleng-2] = '\0';
 													printf(" %s;", yytext+12);
