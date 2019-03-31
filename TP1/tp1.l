@@ -63,11 +63,6 @@ int info = 0;
 <INFO>\}\}[\n\r][\n\r]?/[A-Z\'\=&\[]        { BEGIN INITIAL; }
 <INFO>^\}\}                                 { BEGIN INITIAL; }
 
-<INFO>\[\[([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\|([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\]\] { yytext[yyleng-2] = '\0'; int i = 0;
-                                                                   while (yytext[i] != '|') { i++;}
-                                                                   printf("%s", yytext+i+1);
-                                                                }
-
 <INFO>[ ]\=/[^ ]                           { printf(" = "); }
 <INFO>[ ]*\|[ ]*/[ a-ÿA-z0-9A-Þ_ã-]+[ ]*\= { ; }
 <INFO>\&lt\;ref                            { ; }
@@ -76,14 +71,12 @@ int info = 0;
 <INFO>&lt;(.*)&gt\;                        { ; }
 <INFO>\|                                   { printf(" "); }
 
-<INFO>\{\{formatnum:[0-9]*\}\}                                  { yytext[yyleng-2] = '\0'; printf("%s", yytext+12); }
 <INFO>\{\{fmtn\|([0-9]*)\}\}                                    { yytext[yyleng-2]='\0'; printf("%s", yytext+7); }
 <INFO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|\*\]\]     { ; }
 <INFO>\{\{small[ ]?\|[ ]?\(([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?\)[ ]?\}\}     { int i = 1; while(yytext[i] != '|') i++;
                                                                   yytext[yyleng-2]='\0'; printf("%s", yytext+i+1);
                                                                 }
 
-<INFO>\$                                                { ; } /* LATEX */
 <INFO>\_                                                { printf("-"); } /*LATEX*/
 <INFO>\n|\r                                             { printf(" \\newline\n"); } /*LATEX*/
 
@@ -122,14 +115,6 @@ int info = 0;
                 }
 
 <INITIAL>\[\[Imagem:.*[.]\]\][\n|\r]         { ; }
-
-<RESUMO>\[\[[ ]*([A-Za-zÀ-ÖÙ-öù-ÿ ]*)?([ ][^ ]+)?[ ]*\|([ ]?[A-Za-zÀ-ÖÙ-öù-ÿ ]*?)\]\] { yytext[yyleng-2] = '\0';
-                                                                                        int i = 0;
-                                                                                        while (yytext[i] != '|') { i++;}
-                                                                                        printf("%s", yytext+i+1);
-                                                                                    }
-
-<RESUMO>\{\{formatnum:[0-9]*\}\}             { yytext[yyleng-2] = '\0'; printf("%s", yytext+12);}
 
 <RESUMO>&lt;[Rr][Ee][Ff]                     { BEGIN LINKS; }
 <LINKS>.                                     { ; }
@@ -177,7 +162,6 @@ int info = 0;
 <FMTNRES>\|([A-Za-zÀ-ÖÙ-öù-ÿ²./ ]*)?\}\}     { yytext[yyleng-2]='\0'; printf("%s", yytext+1); BEGIN RESUMO; }
 <FMTNRES>\}\}                                { BEGIN RESUMO; }
 
-<RESUMO>\$                                   { ; } /* LATEX */
 <RESUMO>(\[|\])|\'                           { ; }
 
 <RESUMO>\n|\r                                { BEGIN INITIAL; }
@@ -194,6 +178,15 @@ int info = 0;
 <RESUMO,INFO>lang\=[pb][tr]                       { ; }
 <RESUMO,INFO>\|si\}\}                             { ; }
 <RESUMO,INFO>\|                                   { printf(" "); }
+<RESUMO,INFO>\{\{formatnum:[0-9]*\}\}                                  { yytext[yyleng-2] = '\0'; printf("%s", yytext+12); }
+
+<RESUMO,INFO>\$                                   { ; } /* LATEX */
+
+<RESUMO,INFO>\[\[([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\|([A-Za-zÀ-ÖÙ-öù-ÿ -.º]*)\]\] { yytext[yyleng-2] = '\0';
+                                                                                        int i = 0;
+                                                                                        while (yytext[i] != '|') { i++;}
+                                                                                        printf("%s", yytext+i+1);
+                                                                                    }
 
 \[\[Categoria\:([A-Za-zÀ-ÖÙ-öù-ÿ -.º|]*)\]\] {  if (cat == 0) { printf("\n\nCategorias:"); }
                                                                 int i = 0;
