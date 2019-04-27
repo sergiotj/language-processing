@@ -23,8 +23,8 @@ END {
 
     for(data in desc) {
 
-        split(data, pais, "[|]");
-        split(desc[data], filhos, "[|]");
+        split(data, pais, "[|]")
+        split(desc[data], filhos, "[|]")
 
         for(filho in filhos) {
 
