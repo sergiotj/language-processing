@@ -2,14 +2,14 @@ BEGIN {FS=";"; RS="\n"}
 
 NR > 2 {
 
-    b = sprintf("%s, %s", $4, $5)
-    conta[b]++
+    place = sprintf("%s, %s", $4, $5)
+    places[place]++
 
 }
 
 END {
 
     PROCINFO["sorted_in"] = "@val_num_desc";
-    for(ano in conta) print ano " -> " conta[ano]
+    for(place in places) print place " -> " places[place]
 
 }

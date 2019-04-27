@@ -13,7 +13,7 @@ NR > 2 {
 
     if ($11) {
 
-        conj[$2] = $11
+        spouse[$2] = $11
     }
 }
 
@@ -23,19 +23,19 @@ END {
 
     for(data in desc) {
 
-        split(data, pais, "[|]")
-        split(desc[data], filhos, "[|]")
+        split(data, parents, "[|]")
+        split(desc[data], children, "[|]")
 
-        for(filho in filhos) {
+        for(child in children) {
 
-            if (filhos[filho] in conj) {
+            if (children[child] in spouse) {
 
-                print ("\""pais[1]"\" -> \""filhos[filho]"\"; \""pais[2]"\" -> \""filhos[filho]"\"; \""filhos[filho]"\" -> \""conj[filhos[filho]]"\" [penwidth=3,dir=both]")
+                print ("\""parents[1]"\" -> \""children[child]"\"; \""parents[2]"\" -> \""children[child]"\"; \""children[child]"\" -> \""spouse[children[child]]"\" [penwidth=3,dir=both]")
             }
 
             else {
 
-                print ("\""pais[1]"\" -> \""filhos[filho]"\"; \""pais[2]"\" -> \""filhos[filho]"\"")
+                print ("\""parents[1]"\" -> \""children[child]"\"; \""parents[2]"\" -> \""children[child]"\"")
             }
         }
 
