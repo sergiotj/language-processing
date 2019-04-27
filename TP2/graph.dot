@@ -1,59 +1,59 @@
 digraph{rankdir=LR
-"Álvaro Teixeira da Silva e Castro e Júnior"-> "António Alberto Teixeira da Silva e Castro"; "Maria Alice Leite Gonçalves" -> "António Alberto Teixeira da Silva e Castro"
-"Joaquim Fernandes"-> "Florêncio Fernandes"; "Florinda da Costa" -> "Florêncio Fernandes"
-"Joaquim Fernandes"-> "João Fernandes"; "Florinda da Costa" -> "João Fernandes"
-"Júlio João"-> "António João Gonçalves"; "Margarida Gonçalves" -> "António João Gonçalves"
-"Claudino da Costa"-> "António Gonçalves Costa"; "Amália Gonçalves" -> "António Gonçalves Costa"
-"Dulcídio Marques"-> "Maria da Cunha Marques"; "Emília Cunha" -> "Maria da Cunha Marques"
-"Júlio Ribeiro"-> "Lucinda Ribeiro"; "Maria Nogueira" -> "Lucinda Ribeiro"
-"António Pereira"-> "Domingos Freitas Pereira"; "Maria da Conceição Freitas" -> "Domingos Freitas Pereira"
-"Albino de Freitas"-> "Arminda de Freitas"; "Rosa de Castro Noval" -> "Arminda de Freitas"
-"Florêncio da Cunha"-> "António da Cunha"; "Silvina Francisco" -> "António da Cunha"
-"Eugénio Ribeiro Marques"-> "Óscar Marques"; "Adélia de Carvalho" -> "Óscar Marques"
-"António de Neiva"-> "Armindo de Neiva"; "Maria Gonçalves" -> "Armindo de Neiva"
-"Manuel de Oliveira"-> "Adriano Oliveira"; "Rosa de Jesus Ferreira" -> "Adriano Oliveira"
-"António Joaquim Antunes"-> "Custódia Rodrigues"; "Júlia Rodrigues" -> "Custódia Rodrigues"
-"António Neves"-> "Manuel Neves"; "Maria Lopes" -> "Manuel Neves"
-"António José Gonçalves"-> "Augusto Cruz Gonçalves"; "Joaquina Baptista da Cruz" -> "Augusto Cruz Gonçalves"
-"Armindo de Freitas"-> "António de Freitas"; "Emília de Oliveira" -> "António de Freitas"
-"Adriano Gonçalves da Silva"-> "João Gonçalves da Silva"; "Rosalina Lopes" -> "João Gonçalves da Silva"
-"Joaquim da Costa"-> "Manuel da Costa"; "Rosalina Rodrigues da Silva" -> "Manuel da Costa"
-"António Cunha Bastos"-> "Manuel Cunha Bastos"; "Rosalina Pinto" -> "Manuel Cunha Bastos"
-"Joaquim de Castro"-> "António de Castro"; "Engrácia Lourenço" -> "António de Castro"
-"Joaquim Martins"-> "António Martins"; "Rosalina de Oliveira" -> "António Martins"
-"Joaquim Martins"-> "Manuel Martins"; "Rosalina de Oliveira" -> "Manuel Martins"
-"Francisco Martins"-> "Maria de Lourdes Martins"; "Rosa Sampaio" -> "Maria de Lourdes Martins"
-"Francisco Leite"-> "João Leite"; "Rosa Leite" -> "João Leite"
-"António Fernandes"-> "Felismina Fernandes"; "Albertina Soares" -> "Felismina Fernandes"
-"João de Freitas"-> "Carlos de Freitas"; "Emília Mendes" -> "Carlos de Freitas"
-"Manuel Vaz Branco"-> "Maria da Conceição Vaz Branco"; "Maria Ferreira Machado" -> "Maria da Conceição Vaz Branco"
-"Júlia Teixeira"-> "Casimiro Teixeira"; "Laurinda de Freitas" -> "Casimiro Teixeira"
-"Manuel Gonçalves"-> "Alzira Gonçalves"; "Albina Mendes" -> "Alzira Gonçalves"
-"Avelino Antunes"-> "José Parisio Antunes"; "Olivia Antunes" -> "José Parisio Antunes"
-"José Pereira"-> "Joaquim Armando Ferreira"; "Rosa Alves" -> "Joaquim Armando Ferreira"
-"Abílio da Costa"-> "Albano Costa"; "Rosalina de Sousa" -> "Albano Costa"
-"Júlio Vaz "-> "Manuel Vaz"; "Virgínia Delgado" -> "Manuel Vaz"
-"José Joaquim Rebelo"-> "Manuel Braz  Rebelo"; "Júlia de Magalhães Braz" -> "Manuel Braz  Rebelo"
-"Não tem"-> "Ilídio David de Freitas "; "Vigínia de Freitas" -> "Ilídio David de Freitas "
-"José Lourenço do Vale"-> "Maria Lourenço do Vale"; "Albina Simões" -> "Maria Lourenço do Vale"
-"Claudino Gonçalves"-> "Laurentino Gonçalves"; "Júlia Moreira" -> "Laurentino Gonçalves"
-"António Costa"-> "Luís Mário Costa"; "Rosalina Pinto" -> "Luís Mário Costa"
-"António Fernandes"-> "Joaquim Fernandes"; "Emília da Costa" -> "Joaquim Fernandes"
-"José Leite"-> "Joaquim Ferreira Leite"; "Maria Soares Ferreira" -> "Joaquim Ferreira Leite"
-"Joaquim Lemos Oliveira"-> "Edite Silva Lemos Oliveira"; "Isaura da Silva" -> "Edite Silva Lemos Oliveira"
-"Manuel Ferreira"-> "Maria da Conceição Ribeiro "; "Albertina Ribeiro" -> "Maria da Conceição Ribeiro "
-"Abílio Alves"-> "Joaquim Ferreira Alves"; "Ricardina Pereira" -> "Joaquim Ferreira Alves"
-"Abel Gomes Lopes"-> "Horácio Gomes Lopes"; "Florinda Gonçalves" -> "Horácio Gomes Lopes"
-"Paulo da Costa"-> "Manuel Costa"; "Maria Correia" -> "Manuel Costa"
-"David dos Santos Pinheiro"-> "Artur César Pinheiro"; "Maria Rosa da Silva" -> "Artur César Pinheiro"
-"Francisco Leite"-> "Joaquim Leite"; "Emília Correia" -> "Joaquim Leite"
-"Manuel Marinho"-> "Rosa Martinho"; "Emília de Oliveira" -> "Rosa Martinho"
-"Herculano José Marques Lameiras"-> "Abel Marques Lameiras"; "Felismina Francisco Salgueiro" -> "Abel Marques Lameiras"
-"António Antunes"-> "Irene Pereira"; "Olinda Pereira" -> "Irene Pereira"
-"Angelino de Freitas"-> "Amélia de Freitas"; "Rosalina Alves" -> "Amélia de Freitas"
-"Abel Novais"-> "Joaquim Lopes Novais"; "Rosinda Lopes" -> "Joaquim Lopes Novais"
-"Adriano Gonçalves"-> "António Gonçalves"; "Maria Domingues" -> "António Gonçalves"
-"António Teixeira"-> "Ilda Teixeira"; "Emília Teixeira" -> "Ilda Teixeira"
-"António Teixeira"-> "Manuel Teixeira"; "Emília Teixeira" -> "Manuel Teixeira"
-"Ângelo Nogueira"-> "Joaquim Nogueira"; "Emília Ferreira" -> "Joaquim Nogueira"
+"Álvaro Teixeira da Silva e Castro e Júnior" -> "António Alberto Teixeira da Silva e Castro"; "Maria Alice Leite Gonçalves" -> "António Alberto Teixeira da Silva e Castro"
+"Joaquim Fernandes" -> "Florêncio Fernandes"; "Florinda da Costa" -> "Florêncio Fernandes"; "Florêncio Fernandes" -> "Ana Neves" [penwidth=3,dir=both]
+"Joaquim Fernandes" -> "João Fernandes"; "Florinda da Costa" -> "João Fernandes"; "João Fernandes" -> "Domicilia de Oliveira da Mota" [penwidth=3,dir=both]
+"Júlio João" -> "António João Gonçalves"; "Margarida Gonçalves" -> "António João Gonçalves"; "António João Gonçalves" -> "Maria da Conceição Silva" [penwidth=3,dir=both]
+"Claudino da Costa" -> "António Gonçalves Costa"; "Amália Gonçalves" -> "António Gonçalves Costa"
+"Dulcídio Marques" -> "Maria da Cunha Marques"; "Emília Cunha" -> "Maria da Cunha Marques"; "Maria da Cunha Marques" -> "FernandoMachado Ferreira" [penwidth=3,dir=both]
+"Júlio Ribeiro" -> "Lucinda Ribeiro"; "Maria Nogueira" -> "Lucinda Ribeiro"; "Lucinda Ribeiro" -> "Albano Gonçalves" [penwidth=3,dir=both]
+"António Pereira" -> "Domingos Freitas Pereira"; "Maria da Conceição Freitas" -> "Domingos Freitas Pereira"; "Domingos Freitas Pereira" -> "Maria Emília de Freitas" [penwidth=3,dir=both]
+"Albino de Freitas" -> "Arminda de Freitas"; "Rosa de Castro Noval" -> "Arminda de Freitas"; "Arminda de Freitas" -> "Abílio Nogueira" [penwidth=3,dir=both]
+"Florêncio da Cunha" -> "António da Cunha"; "Silvina Francisco" -> "António da Cunha"; "António da Cunha" -> "Domicilia Gonçalves" [penwidth=3,dir=both]
+"Eugénio Ribeiro Marques" -> "Óscar Marques"; "Adélia de Carvalho" -> "Óscar Marques"; "Óscar Marques" -> "Maria Tereza Marques" [penwidth=3,dir=both]
+"António de Neiva" -> "Armindo de Neiva"; "Maria Gonçalves" -> "Armindo de Neiva"; "Armindo de Neiva" -> "Olinda Lourenço" [penwidth=3,dir=both]
+"Manuel de Oliveira" -> "Adriano Oliveira"; "Rosa de Jesus Ferreira" -> "Adriano Oliveira"; "Adriano Oliveira" -> "Camila Fernandes" [penwidth=3,dir=both]
+"António Joaquim Antunes" -> "Custódia Rodrigues"; "Júlia Rodrigues" -> "Custódia Rodrigues"; "Custódia Rodrigues" -> "Joaquim Vaz" [penwidth=3,dir=both]
+"António Neves" -> "Manuel Neves"; "Maria Lopes" -> "Manuel Neves"; "Manuel Neves" -> "Maria de Lourdes Rodrigues" [penwidth=3,dir=both]
+"António José Gonçalves" -> "Augusto Cruz Gonçalves"; "Joaquina Baptista da Cruz" -> "Augusto Cruz Gonçalves"; "Augusto Cruz Gonçalves" -> "Isabel de Sousa" [penwidth=3,dir=both]
+"Armindo de Freitas" -> "António de Freitas"; "Emília de Oliveira" -> "António de Freitas"; "António de Freitas" -> "Emília de Bastos" [penwidth=3,dir=both]
+"Adriano Gonçalves da Silva" -> "João Gonçalves da Silva"; "Rosalina Lopes" -> "João Gonçalves da Silva"; "João Gonçalves da Silva" -> "Deolinda Gonçalves da Silva" [penwidth=3,dir=both]
+"Joaquim da Costa" -> "Manuel da Costa"; "Rosalina Rodrigues da Silva" -> "Manuel da Costa"; "Manuel da Costa" -> "Soledade Queirós" [penwidth=3,dir=both]
+"António Cunha Bastos" -> "Manuel Cunha Bastos"; "Rosalina Pinto" -> "Manuel Cunha Bastos"; "Manuel Cunha Bastos" -> "Maria Glória Rodrigues Oliveira" [penwidth=3,dir=both]
+"Joaquim de Castro" -> "António de Castro"; "Engrácia Lourenço" -> "António de Castro"; "António de Castro" -> "Maria de Jesus Ribeiro Luiz" [penwidth=3,dir=both]
+"Joaquim Martins" -> "António Martins"; "Rosalina de Oliveira" -> "António Martins"; "António Martins" -> "Maria do Carmo Rodrigues" [penwidth=3,dir=both]
+"Joaquim Martins" -> "Manuel Martins"; "Rosalina de Oliveira" -> "Manuel Martins"; "Manuel Martins" -> "Maria Lopes" [penwidth=3,dir=both]
+"" -> "Casimiro Teixeira"; "Júlia Teixeira" -> "Casimiro Teixeira"; "Casimiro Teixeira" -> "Laurinda de Freitas" [penwidth=3,dir=both]
+"Francisco Martins" -> "Maria de Lourdes Martins"; "Rosa Sampaio" -> "Maria de Lourdes Martins"; "Maria de Lourdes Martins" -> "Artur Castro" [penwidth=3,dir=both]
+"Francisco Leite" -> "João Leite"; "Rosa Leite" -> "João Leite"; "João Leite" -> "Natividade da Costa Leite" [penwidth=3,dir=both]
+"António Fernandes" -> "Felismina Fernandes"; "Albertina Soares" -> "Felismina Fernandes"; "Felismina Fernandes" -> "José António Antunes Gonçalves" [penwidth=3,dir=both]
+"João de Freitas" -> "Carlos de Freitas"; "Emília Mendes" -> "Carlos de Freitas"; "Carlos de Freitas" -> "Clementina Rosa Marques" [penwidth=3,dir=both]
+"Manuel Vaz Branco" -> "Maria da Conceição Vaz Branco"; "Maria Ferreira Machado" -> "Maria da Conceição Vaz Branco"
+"Manuel Gonçalves" -> "Alzira Gonçalves"; "Albina Mendes" -> "Alzira Gonçalves"
+"Avelino Antunes" -> "José Parisio Antunes"; "Olivia Antunes" -> "José Parisio Antunes"
+"José Pereira" -> "Joaquim Armando Ferreira"; "Rosa Alves" -> "Joaquim Armando Ferreira"; "Joaquim Armando Ferreira" -> "Amélia Martins Fernandes" [penwidth=3,dir=both]
+"Abílio da Costa" -> "Albano Costa"; "Rosalina de Sousa" -> "Albano Costa"; "Albano Costa" -> "Arminda de Lourdes Vieira" [penwidth=3,dir=both]
+"Júlio Vaz " -> "Manuel Vaz"; "Virgínia Delgado" -> "Manuel Vaz"; "Manuel Vaz" -> "Maria Vaz Monteiro" [penwidth=3,dir=both]
+"José Joaquim Rebelo" -> "Manuel Braz  Rebelo"; "Júlia de Magalhães Braz" -> "Manuel Braz  Rebelo"
+"Não tem" -> "Ilídio David de Freitas "; "Vigínia de Freitas" -> "Ilídio David de Freitas "; "Ilídio David de Freitas " -> "Deolinda Nogueira" [penwidth=3,dir=both]
+"José Lourenço do Vale" -> "Maria Lourenço do Vale"; "Albina Simões" -> "Maria Lourenço do Vale"; "Maria Lourenço do Vale" -> "José Rodrigues" [penwidth=3,dir=both]
+"Claudino Gonçalves" -> "Laurentino Gonçalves"; "Júlia Moreira" -> "Laurentino Gonçalves"; "Laurentino Gonçalves" -> "Júlia Gonçalves" [penwidth=3,dir=both]
+"António Costa" -> "Luís Mário Costa"; "Rosalina Pinto" -> "Luís Mário Costa"; "Luís Mário Costa" -> "Rosa Gonçalves Monteiro" [penwidth=3,dir=both]
+"António Fernandes" -> "Joaquim Fernandes"; "Emília da Costa" -> "Joaquim Fernandes"; "Joaquim Fernandes" -> "Florinda Pereira Ribeiro" [penwidth=3,dir=both]
+"José Leite" -> "Joaquim Ferreira Leite"; "Maria Soares Ferreira" -> "Joaquim Ferreira Leite"; "Joaquim Ferreira Leite" -> "Emília de Oliveira" [penwidth=3,dir=both]
+"Joaquim Lemos Oliveira" -> "Edite Silva Lemos Oliveira"; "Isaura da Silva" -> "Edite Silva Lemos Oliveira"; "Edite Silva Lemos Oliveira" -> "Marcelino Gonçalves" [penwidth=3,dir=both]
+"Manuel Ferreira" -> "Maria da Conceição Ribeiro "; "Albertina Ribeiro" -> "Maria da Conceição Ribeiro "; "Maria da Conceição Ribeiro " -> "Manuel Pinto" [penwidth=3,dir=both]
+"Abílio Alves" -> "Joaquim Ferreira Alves"; "Ricardina Pereira" -> "Joaquim Ferreira Alves"
+"Abel Gomes Lopes" -> "Horácio Gomes Lopes"; "Florinda Gonçalves" -> "Horácio Gomes Lopes"
+"Paulo da Costa" -> "Manuel Costa"; "Maria Correia" -> "Manuel Costa"; "Manuel Costa" -> "maria Adélia Leite" [penwidth=3,dir=both]
+"David dos Santos Pinheiro" -> "Artur César Pinheiro"; "Maria Rosa da Silva" -> "Artur César Pinheiro"; "Artur César Pinheiro" -> "Maria Gonçalves da Silva" [penwidth=3,dir=both]
+"Francisco Leite" -> "Joaquim Leite"; "Emília Correia" -> "Joaquim Leite"; "Joaquim Leite" -> "Maria de Lourdes Pereira" [penwidth=3,dir=both]
+"Manuel Marinho" -> "Rosa Martinho"; "Emília de Oliveira" -> "Rosa Martinho"; "Rosa Martinho" -> "Manuel da Costa" [penwidth=3,dir=both]
+"Herculano José Marques Lameiras" -> "Abel Marques Lameiras"; "Felismina Francisco Salgueiro" -> "Abel Marques Lameiras"; "Abel Marques Lameiras" -> "Maria Gonçalves de Macedo" [penwidth=3,dir=both]
+"António Antunes" -> "Irene Pereira"; "Olinda Pereira" -> "Irene Pereira"; "Irene Pereira" -> "Domingos Moreira da Silva" [penwidth=3,dir=both]
+"Angelino de Freitas" -> "Amélia de Freitas"; "Rosalina Alves" -> "Amélia de Freitas"; "Amélia de Freitas" -> "António Pinto de Lemos" [penwidth=3,dir=both]
+"Abel Novais" -> "Joaquim Lopes Novais"; "Rosinda Lopes" -> "Joaquim Lopes Novais"
+"Adriano Gonçalves" -> "António Gonçalves"; "Maria Domingues" -> "António Gonçalves"; "António Gonçalves" -> "Maria Costa" [penwidth=3,dir=both]
+"António Teixeira" -> "Ilda Teixeira"; "Emília Teixeira" -> "Ilda Teixeira"; "Ilda Teixeira" -> "Albino Martins" [penwidth=3,dir=both]
+"António Teixeira" -> "Manuel Teixeira"; "Emília Teixeira" -> "Manuel Teixeira"; "Manuel Teixeira" -> "Esperança Leite" [penwidth=3,dir=both]
+"Ângelo Nogueira" -> "Joaquim Nogueira"; "Emília Ferreira" -> "Joaquim Nogueira"; "Joaquim Nogueira" -> "Joaquina Freitas" [penwidth=3,dir=both]
 }
