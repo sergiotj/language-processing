@@ -2,14 +2,14 @@ BEGIN {FS=";"; RS="\n"}
 
 NR > 2 {
 
-    b = sprintf("%s|%s", $7, $9)
+    par = sprintf("%s|%s", $7, $9)
 
-    if (b in desc) {
+    if (par in desc) {
 
-        desc[b] = sprintf("%s|%s", desc[b], $2)
+        desc[par] = sprintf("%s|%s", desc[par], $2)
     }
 
-    else desc[b] = $2
+    else desc[par] = $2
 
     if ($11) {
 
