@@ -1,5 +1,16 @@
-BEGIN {FS=";+"; RS="\n"}
+BEGIN {FS=";"; RS="\n"}
 
-NR > 2 { split($5, data, "[-/.]"); b = sprintf("%s, %s", data[1], $4); conta[b]++;}
+NR > 2 {
 
-END { PROCINFO["sorted_in"] = "@val_num_desc"; for(ano in conta) print ano " -> " conta[ano]}
+    split($6, date, "[-/.]")
+
+    yearPlace = sprintf("%s, %s", date[1], $5)
+    yearPlaces[yearPlace]++
+}
+
+END {
+
+    PROCINFO["sorted_in"] = "@val_num_desc"
+    for(yearPlace in yearPlaces) print yearPlace " -> " yearPlaces[yearPlace]
+
+}
