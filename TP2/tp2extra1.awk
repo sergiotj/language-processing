@@ -1,9 +1,9 @@
 BEGIN {FS=";+"; RS="\n"}
 
 NR > 2 { 
-	if ( sprintf("%s", $8) != null) {
+	if ( sprintf("%s", $11) != null) {
 		c++;
 	}
 }			
 
-END { print "Número de pessoas casadas: " c; }
+END { print "Number of maried people: " c*2; }
