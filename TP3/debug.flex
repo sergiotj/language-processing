@@ -81,7 +81,7 @@ Atributo: duracao
 String: 130
 Fim de String
 Atributo: idioma
-String: ingles
+String: inglês
 Fim de String
 Atributo: estudio
 String: warner bros
@@ -162,4 +162,3 @@ ID: prestige
 estreou
 ID: prestigeEv
 Fim de ligação
-

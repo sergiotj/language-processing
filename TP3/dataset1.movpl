@@ -1,50 +1,50 @@
 ator leonardo:
-    nome: "Leonardo DiCaprio"
-    nascimento: "1974-11-11"
-    nacionalidade: "USA"
-    url: "https://www.google.pt/search?q=leonardo+dicaprio"
+    nome: Leonardo DiCaprio
+    nascimento: 1974-11-11
+    nacionalidade: USA
+    url: https://www.google.pt/search?q=leonardo+dicaprio
 
 ator bale:
-    nome: "Christian Bale"
-    nascimento: "1974-01-30"
-    nacionalidade: "USA"
-    url: "https://www.google.pt/search?q=christian+bale"
+    nome: Christian Bale
+    nascimento: 1974-01-30
+    nacionalidade: USA
+    url: https://www.google.pt/search?q=christian+bale
 
 filme shutterisland:
-    nome: "Shutter Island"
-    genero: "thriller"
-    duracao: "148"
-    idioma: "ingles"
-    estudio: "paramount"
+    nome: Shutter Island
+    genero: thriller
+    duracao: 148
+    idioma: ingles
+    estudio: paramount
 
 filme inception:
-    nome: "Inception"
-    genero: "thriller"
-    duracao: "148"
-    idioma: "ingles"
-    estudio: "warner bros"
+    nome: Inception
+    genero: thriller
+    duracao: 148
+    idioma: ingles
+    estudio: warner bros
 
 filme prestige:
-    nome: "The Prestige"
-    genero: "thriller"
-    duracao: "130"
-    idioma: "ingles"
-    estudio: "warner bros"
+    nome: The Prestige
+    genero: thriller
+    duracao: 130
+    idioma: inglês
+    estudio: warner bros
 
 estreia shutterEv:
-  nome: "Estreia do Shutter Island"
-  data: "2010-02-25"
-  local: "Braga"
+    nome: Estreia do Shutter Island
+    data: 2010-02-25
+    local: Braga
 
 estreia inceptionEv:
-  nome: "Estreia do Inception"
-  data: "2010-07-22"
-  local: "Braga"
+    nome: Estreia do Inception
+    data: 2010-07-22
+    local: Braga
 
 estreia prestigeEv:
-    nome: "Estreia do The Prestige"
-    data: "2006-12-28"
-    local: "Braga"
+    nome: Estreia do The Prestige
+    data: 2006-12-28
+    local: Braga
 
 
 
