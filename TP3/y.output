@@ -1,0 +1,189 @@
+Terminals unused in grammar
+
+   ERR
+
+
+Grammar
+
+    0 $accept: Objects $end
+
+    1 Objects: Objects Object
+    2        | Objects Connection
+    3        | %empty
+
+    4 Object: OBJECT_TYPE OBJECT_ID Fields
+
+    5 Fields: Fields Field
+    6       | Field
+
+    7 Field: ATTRIBUTE STRING
+
+    8 Connection: OBJECT_ID PARTICIPOU OBJECT_ID
+    9           | OBJECT_ID ESTREOU OBJECT_ID
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+OBJECT_TYPE (258) 4
+STRING (259) 7
+OBJECT_ID (260) 4 8 9
+ATTRIBUTE (261) 7
+PARTICIPOU (262) 8
+ESTREOU (263) 9
+ERR (264)
+
+
+Nonterminals, with rules where they appear
+
+$accept (10)
+    on left: 0
+Objects (11)
+    on left: 1 2 3, on right: 0 1 2
+Object (12)
+    on left: 4, on right: 1
+Fields (13)
+    on left: 5 6, on right: 4 5
+Field (14)
+    on left: 7, on right: 5 6
+Connection (15)
+    on left: 8 9, on right: 2
+
+
+State 0
+
+    0 $accept: . Objects $end
+
+    $default  reduce using rule 3 (Objects)
+
+    Objects  go to state 1
+
+
+State 1
+
+    0 $accept: Objects . $end
+    1 Objects: Objects . Object
+    2        | Objects . Connection
+
+    $end         shift, and go to state 2
+    OBJECT_TYPE  shift, and go to state 3
+    OBJECT_ID    shift, and go to state 4
+
+    Object      go to state 5
+    Connection  go to state 6
+
+
+State 2
+
+    0 $accept: Objects $end .
+
+    $default  accept
+
+
+State 3
+
+    4 Object: OBJECT_TYPE . OBJECT_ID Fields
+
+    OBJECT_ID  shift, and go to state 7
+
+
+State 4
+
+    8 Connection: OBJECT_ID . PARTICIPOU OBJECT_ID
+    9           | OBJECT_ID . ESTREOU OBJECT_ID
+
+    PARTICIPOU  shift, and go to state 8
+    ESTREOU     shift, and go to state 9
+
+
+State 5
+
+    1 Objects: Objects Object .
+
+    $default  reduce using rule 1 (Objects)
+
+
+State 6
+
+    2 Objects: Objects Connection .
+
+    $default  reduce using rule 2 (Objects)
+
+
+State 7
+
+    4 Object: OBJECT_TYPE OBJECT_ID . Fields
+
+    ATTRIBUTE  shift, and go to state 10
+
+    Fields  go to state 11
+    Field   go to state 12
+
+
+State 8
+
+    8 Connection: OBJECT_ID PARTICIPOU . OBJECT_ID
+
+    OBJECT_ID  shift, and go to state 13
+
+
+State 9
+
+    9 Connection: OBJECT_ID ESTREOU . OBJECT_ID
+
+    OBJECT_ID  shift, and go to state 14
+
+
+State 10
+
+    7 Field: ATTRIBUTE . STRING
+
+    STRING  shift, and go to state 15
+
+
+State 11
+
+    4 Object: OBJECT_TYPE OBJECT_ID Fields .
+    5 Fields: Fields . Field
+
+    ATTRIBUTE  shift, and go to state 10
+
+    $default  reduce using rule 4 (Object)
+
+    Field  go to state 16
+
+
+State 12
+
+    6 Fields: Field .
+
+    $default  reduce using rule 6 (Fields)
+
+
+State 13
+
+    8 Connection: OBJECT_ID PARTICIPOU OBJECT_ID .
+
+    $default  reduce using rule 8 (Connection)
+
+
+State 14
+
+    9 Connection: OBJECT_ID ESTREOU OBJECT_ID .
+
+    $default  reduce using rule 9 (Connection)
+
+
+State 15
+
+    7 Field: ATTRIBUTE STRING .
+
+    $default  reduce using rule 7 (Field)
+
+
+State 16
+
+    5 Fields: Fields Field .
+
+    $default  reduce using rule 5 (Fields)
