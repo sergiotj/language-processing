@@ -16,7 +16,7 @@ newline  (\r\n|\n)
 %x object_id attribute attributeValue connection
 
 %%
-(ator|filme|estreia)                    { init++; if (init == 0) { yyout = fopen("flex.debug", "w"); }
+(ator|filme|estreia)                    { init++; if (init == 0) { yyout = fopen("debug.flex", "w"); }
                             fprintf(yyout,"Object type: %s\n", yytext); BEGIN object_id; yylval.str = strdup(yytext); return OBJECT_TYPE; }
 {id}                                    { fprintf(yyout,"Link ID: %s\n", yytext); BEGIN connection; yylval.str = strdup(yytext); return OBJECT_ID; }
 

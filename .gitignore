@@ -55,3 +55,5 @@ dkms.conf
 TP1/tp1
 TP3/y.tab.h
 TP3/y.tab.c
+TP3/lex.yy.c
+TP3/filmes
