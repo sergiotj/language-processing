@@ -58,3 +58,6 @@ TP3/y.tab.c
 TP3/lex.yy.c
 TP3/filmes
 TP3/y.output
+TP3/graph.svg
+TP3/graph.dot
+TP3/debug.flex
