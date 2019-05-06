@@ -24,6 +24,27 @@ filme inception:
     Idioma: Inglês
     Estúdio: Warner Bros
 
+filme batman1:
+    Nome: Batman Begins
+    Géneros: Ação, Aventura, Thriller
+    Duração: 140
+    Idioma: Inglês
+    Estúdio: Warner Bros
+
+filme batman2:
+    Nome: The Dark Knight
+    Géneros: Ação, Policial, Thriller
+    Duração: 152
+    Idioma: Inglês
+    Estúdio: Warner Bros
+
+filme batman3:
+    Nome: The Dark Knight Rises
+    Géneros: Aventura, Ação, Policial, Drama
+    Duração: 165
+    Idioma: Inglês
+    Estúdio: Warner Bros
+
 filme prestige:
     Nome: The Prestige
     Género: Thriller
@@ -48,6 +69,10 @@ estreia prestigeEv:
 leonardo participou shutterisland
 leonardo participou inception
 bale participou prestige
+
+bale participou batman1
+bale participou batman2
+bale participou batman3
 
 shutterisland estreou shutterEv
 inception estreou inceptionEv
