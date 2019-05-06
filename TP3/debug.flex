@@ -90,9 +90,6 @@ Fim de Objeto
 Início de Objeto
 Tipo Objeto: estreia
 ID: shutterEv
-Atributo: nome
-String: Estreia do Shutter Island
-Fim de String
 Atributo: data
 String: 2010-02-25
 Fim de String
@@ -103,9 +100,6 @@ Fim de Objeto
 Início de Objeto
 Tipo Objeto: estreia
 ID: inceptionEv
-Atributo: nome
-String: Estreia do Inception
-Fim de String
 Atributo: data
 String: 2010-07-22
 Fim de String
@@ -116,9 +110,6 @@ Fim de Objeto
 Início de Objeto
 Tipo Objeto: estreia
 ID: prestigeEv
-Atributo: nome
-String: Estreia do The Prestige
-Fim de String
 Atributo: data
 String: 2006-12-28
 Fim de String
@@ -162,3 +153,4 @@ ID: prestige
 estreou
 ID: prestigeEv
 Fim de ligação
+
