@@ -10,8 +10,6 @@ extern int yylineno;
 
 GArray* node_data;
 GArray* edge_data;
-
-extern FILE *yyout;
 %}
 
 %token OBJECT_TYPE STRING OBJECT_ID ATTRIBUTE PARTICIPOU ESTREOU ERR
@@ -25,7 +23,6 @@ extern FILE *yyout;
 %start Objects
 
 %%
-
 Objects: Objects Object
         | Objects Connection
         |
@@ -41,9 +38,9 @@ Fields: Fields Field
 Field: ATTRIBUTE STRING     { char* one = strdup($1); char* two = strdup($2); g_array_append_val(node_data, one); g_array_append_val(node_data, two); }
 ;
 
-Connection: OBJECT_ID PARTICIPOU OBJECT_ID         { char* one = strdup($1); char* three = strdup($3); char* f = "participou"; g_array_append_val(edge_data, one); g_array_append_val(edge_data, three); g_array_append_val(edge_data, f); }
-           | OBJECT_ID ESTREOU OBJECT_ID  { char* one = strdup($1); char* three = strdup($3); char* p = "estreou"; g_array_append_val(edge_data, one); g_array_append_val(edge_data, three); g_array_append_val(edge_data, p); }
-           ;
+Connection: OBJECT_ID PARTICIPOU OBJECT_ID         { char* one = strdup($1); char* three = strdup($3); char* f = "participou"; g_array_append_val(edge_data, one);                                                          g_array_append_val(edge_data, three); g_array_append_val(edge_data, f); }
+           | OBJECT_ID ESTREOU OBJECT_ID  { char* one = strdup($1); char* three = strdup($3); char* p = "estreou"; g_array_append_val(edge_data, one);                                                  g_array_append_val(edge_data, three); g_array_append_val(edge_data, p); }
+;
 %%
 
 #include "lex.yy.c"
@@ -84,44 +81,43 @@ int main(int argc, char **argv) {
     // Print every node
     // (unsigned int because node_data->len is a guint)
     unsigned int lastUsed = 0;
+
     for (unsigned int i = 0; i < node_data->len; i++) {
-        // Look for emigrante, obra, or evento
+
         if (strcmp(g_array_index(node_data, char*, i), "ator") == 0 ||
             strcmp(g_array_index(node_data, char*, i), "filme") == 0 ||
             strcmp(g_array_index(node_data, char*, i), "estreia") == 0) {
 
-            // Found!
-            // Now pick back up on the "lastUsed" index and create the node
-            // Start node
-
             printf("%s [label=\"{", g_array_index(node_data, char*, i+1));
+
             char* label;
             char* string;
             int startedWriting = 0;
+
             for (; lastUsed < i; lastUsed++) {
-            label = g_array_index(node_data, char*, lastUsed);
-            label[0] = toupper(label[0]); // Uppercase first char of label
-            lastUsed++; // Go to next node_data token
-            string = g_array_index(node_data, char*, lastUsed);
+
+                label = g_array_index(node_data, char*, lastUsed);
+                label[0] = toupper(label[0]); // Uppercase first char of label
+                lastUsed++; // Go to next node_data token
+                string = g_array_index(node_data, char*, lastUsed);
+                if (strcmp(label, "Url") == 0) {
+                    break;
+                }
+                if (startedWriting) {
+                    printf(" | ");
+                } else {
+                    startedWriting = 1;
+                }
+
+                printf("%s: %s", label, string);
+            }
+
             if (strcmp(label, "Url") == 0) {
-                break;
-            }
-            if (startedWriting) {
-                printf(" | ");
+                printf("}\", URL=\"%s\"];\n", string);
+                lastUsed += 3; // Move lastUsed 3 steps forward because we stopped at url
             } else {
-                startedWriting = 1;
-            }
-            printf("%s: %s", label, string);
-            }
-            // Finished wrting node
-            // Print URL if we stopped on that field,
-            // or just close the node if no URL found at the end
-            if (strcmp(label, "Url") == 0) {
-            printf("}\", URL=\"%s\"];\n", string);
-            lastUsed += 3; // Move lastUsed 3 steps forward because we stopped at url
-            } else {
-            printf("}\"];\n");
-            lastUsed += 2; // Move lastUsed 2 steps forward
+                printf("}\"];\n");
+                lastUsed += 2; // Move lastUsed 2 steps forward
             }
         }
     }
@@ -134,6 +130,7 @@ int main(int argc, char **argv) {
         char* done = g_array_index(edge_data, char*, j);
         j++;
         char* action = g_array_index(edge_data, char*, j);
+
         printf("%s -> %s[label=\"%s\"]\n", doer, done, action);
     }
 
@@ -145,9 +142,7 @@ int main(int argc, char **argv) {
     close(stdout);
 
     int status = system("dot -Tsvg graph.dot -o graph.svg");
-
     if (status == 0) {
-
         printf("Graph created at graph.svg!\n");
         return 0;
     }
