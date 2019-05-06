@@ -6,15 +6,14 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-extern int yylineno;
-
 GArray* node_data;
 GArray* edge_data;
 %}
 
 %token OBJECT_TYPE STRING OBJECT_ID ATTRIBUTE PARTICIPOU ESTREOU ERR
 
-%union{
+%union {
+
   char* str;
 }
 
