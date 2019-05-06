@@ -1,126 +1,137 @@
-flex: Object type: ator
-flex: Object ID: leonardo
-flex: Field ID: nome
-flex: String: Leonardo DiCaprio
-flex: End of string (not two newlines)
-flex: Field ID: nascimento
-flex: String: 1974-11-11
-flex: End of string (not two newlines)
-flex: Field ID: nacionalidade
-flex: String: USA
-flex: End of string (not two newlines)
-flex: Field ID: url
-flex: String: https://www.google.pt/search?q=leonardo+dicaprio
-flex: Two newlines after field value
-flex: Object type: ator
-flex: Object ID: bale
-flex: Field ID: nome
-flex: String: Christian Bale
-flex: End of string (not two newlines)
-flex: Field ID: nascimento
-flex: String: 1974-01-30
-flex: End of string (not two newlines)
-flex: Field ID: nacionalidade
-flex: String: USA
-flex: End of string (not two newlines)
-flex: Field ID: url
-flex: String: https://www.google.pt/search?q=christian+bale
-flex: Two newlines after field value
-flex: Object type: filme
-flex: Object ID: shutterisland
-flex: Field ID: nome
-flex: String: Shutter Island
-flex: End of string (not two newlines)
-flex: Field ID: genero
-flex: String: thriller
-flex: End of string (not two newlines)
-flex: Field ID: duracao
-flex: String: 148
-flex: End of string (not two newlines)
-flex: Field ID: idioma
-flex: String: ingles
-flex: End of string (not two newlines)
-flex: Field ID: estudio
-flex: String: paramount
-flex: Two newlines after field value
-flex: Object type: filme
-flex: Object ID: inception
-flex: Field ID: nome
-flex: String: Inception
-flex: End of string (not two newlines)
-flex: Field ID: genero
-flex: String: thriller
-flex: End of string (not two newlines)
-flex: Field ID: duracao
-flex: String: 148
-flex: End of string (not two newlines)
-flex: Field ID: idioma
-flex: String: ingles
-flex: End of string (not two newlines)
-flex: Field ID: estudio
-flex: String: warner bros
-flex: Two newlines after field value
-flex: Object type: filme
-flex: Object ID: prestige
-flex: Field ID: nome
-flex: String: The Prestige
-flex: End of string (not two newlines)
-flex: Field ID: genero
-flex: String: thriller
-flex: End of string (not two newlines)
-flex: Field ID: duracao
-flex: String: 130
-flex: End of string (not two newlines)
-flex: Field ID: idioma
-flex: String: ingles
-flex: End of string (not two newlines)
-flex: Field ID: estudio
-flex: String: warner bros
-flex: Two newlines after field value
-flex: Object type: estreia
-flex: Object ID: shutterEv
-flex: Field ID: nome
-flex: String: Estreia do Shutter Island
-flex: End of string (not two newlines)
-flex: Field ID: data
-flex: String: 2010-02-25
-flex: End of string (not two newlines)
-flex: Field ID: local
-flex: String: Braga
-flex: Two newlines after field value
-flex: Object type: estreia
-flex: Object ID: inceptionEv
-flex: Field ID: nome
-flex: String: Estreia do Inception
-flex: End of string (not two newlines)
-flex: Field ID: data
-flex: String: 2010-07-22
-flex: End of string (not two newlines)
-flex: Field ID: local
-flex: String: Braga
-flex: Two newlines after field value
-flex: Object type: estreia
-flex: Object ID: prestigeEv
-flex: Field ID: nome
-flex: String: Estreia do The Prestige
-flex: End of string (not two newlines)
-flex: Field ID: data
-flex: String: 2006-12-28
-flex: End of string (not two newlines)
-flex: Field ID: local
-flex: String: Braga
-flex: Two newlines after field value
-flex: Link ID: leonardo
-flex: participou
-flex: Link ID string: shutterisland
-flex: End of connection
-flex: Link ID: leonardo
-flex: participou
-flex: Link ID string: inception
-flex: End of connection
-flex: Link ID: bale
-flex: participou
-flex: Link ID string: prestige
-flex: End of connection
-flex: Eating newline.
-flex: Link ID: shutterislan
+Object type: ator
+Object ID: leonardo
+attribute ID: nome
+String: Leonardo DiCaprio
+End of string (not two newlines)
+attribute ID: nascimento
+String: 1974-11-11
+End of string (not two newlines)
+attribute ID: nacionalidade
+String: USA
+End of string (not two newlines)
+attribute ID: url
+String: https://www.google.pt/search?q=leonardo+dicaprio
+Two newlines after attribute value
+Object type: ator
+Object ID: bale
+attribute ID: nome
+String: Christian Bale
+End of string (not two newlines)
+attribute ID: nascimento
+String: 1974-01-30
+End of string (not two newlines)
+attribute ID: nacionalidade
+String: USA
+End of string (not two newlines)
+attribute ID: url
+String: https://www.google.pt/search?q=christian+bale
+Two newlines after attribute value
+Object type: filme
+Object ID: shutterisland
+attribute ID: nome
+String: Shutter Island
+End of string (not two newlines)
+attribute ID: genero
+String: thriller
+End of string (not two newlines)
+attribute ID: duracao
+String: 148
+End of string (not two newlines)
+attribute ID: idioma
+String: ingles
+End of string (not two newlines)
+attribute ID: estudio
+String: paramount
+Two newlines after attribute value
+Object type: filme
+Object ID: inception
+attribute ID: nome
+String: Inception
+End of string (not two newlines)
+attribute ID: genero
+String: thriller
+End of string (not two newlines)
+attribute ID: duracao
+String: 148
+End of string (not two newlines)
+attribute ID: idioma
+String: ingles
+End of string (not two newlines)
+attribute ID: estudio
+String: warner bros
+Two newlines after attribute value
+Object type: filme
+Object ID: prestige
+attribute ID: nome
+String: The Prestige
+End of string (not two newlines)
+attribute ID: genero
+String: thriller
+End of string (not two newlines)
+attribute ID: duracao
+String: 130
+End of string (not two newlines)
+attribute ID: idioma
+String: ingles
+End of string (not two newlines)
+attribute ID: estudio
+String: warner bros
+Two newlines after attribute value
+Object type: estreia
+Object ID: shutterEv
+attribute ID: nome
+String: Estreia do Shutter Island
+End of string (not two newlines)
+attribute ID: data
+String: 2010-02-25
+End of string (not two newlines)
+attribute ID: local
+String: Braga
+Two newlines after attribute value
+Object type: estreia
+Object ID: inceptionEv
+attribute ID: nome
+String: Estreia do Inception
+End of string (not two newlines)
+attribute ID: data
+String: 2010-07-22
+End of string (not two newlines)
+attribute ID: local
+String: Braga
+Two newlines after attribute value
+Object type: estreia
+Object ID: prestigeEv
+attribute ID: nome
+String: Estreia do The Prestige
+End of string (not two newlines)
+attribute ID: data
+String: 2006-12-28
+End of string (not two newlines)
+attribute ID: local
+String: Braga
+Two newlines after attribute value
+Link ID: leonardo
+participou
+Link ID string: shutterisland
+End of connection
+Link ID: leonardo
+participou
+Link ID string: inception
+End of connection
+Link ID: bale
+participou
+Link ID string: prestige
+End of connection
+Eating newline.
+Link ID: shutterisland
+estreou
+Link ID string: shutterEv
+End of connection
+Link ID: inception
+estreou
+Link ID string: inceptionEv
+End of connection
+Link ID: prestige
+estreou
+Link ID string: prestigeEv
+End of connection
