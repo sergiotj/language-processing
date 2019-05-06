@@ -53,3 +53,5 @@ dkms.conf
 *.xml
 *.tex
 TP1/tp1
+TP3/y.tab.h
+TP3/y.tab.c
