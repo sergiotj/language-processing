@@ -51,31 +51,9 @@ int yyerror(char *s) {
     printf("%s\n", s);
 }
 
-int main(int argc, char **argv) {
+void getData() {
 
-    if (argc != 2) {
-
-        printf("Erro. USAGE: ./filmes inFile\n");
-        return 1;
-    }
-
-    FILE *myfile = fopen(argv[1], "r");
-
-    yyin = myfile;
-
-    node_data = g_array_new(FALSE, TRUE, sizeof(char*));
-    edge_data = g_array_new(FALSE, TRUE, sizeof(char*));
-    yyparse();
-
-    printf("----- Creating graph... -----\n");
-
-    remove("graph.dot");
-    int fd = open("graph.dot", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
-
-    int stdout = dup(1);
-    dup2(fd, 1);
-
-    // Graph header
+        // Graph header
     printf("digraph D {\n  node [shape=Mrecord fontname=\"Arial\"];\n  edge [fontname=\"Arial\"];\n");
     // Print every node
     // (unsigned int because node_data->len is a guint)
@@ -136,17 +114,46 @@ int main(int argc, char **argv) {
     // Close graph
     printf("}\n");
 
+}
+
+int main(int argc, char **argv) {
+
+    if (argc != 2) {
+
+        printf("Erro. USAGE: ./filmes inFile\n");
+        return 1;
+    }
+
+    FILE *myfile = fopen(argv[1], "r");
+
+    yyin = myfile;
+
+    node_data = g_array_new(FALSE, TRUE, sizeof(char*));
+    edge_data = g_array_new(FALSE, TRUE, sizeof(char*));
+    yyparse();
+
+    printf("----- Creating graph... -----\n");
+
+    remove("graph.dot");
+    int fd = open("graph.dot", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
+
+    int stdout = dup(1);
+    dup2(fd, 1);
+
+    // obter dados para o grafo
+    getData();
+
     close(fd);
     dup2(stdout,1);
     close(stdout);
 
     int status = system("dot -Tsvg graph.dot -o graph.svg");
-    if (status == 0) {
-        printf("Graph created at graph.svg!\n");
-        return 0;
+    if (status != 0) {
+        printf("Error at graph creation!\n");
+        return 1;
     }
 
-    printf("Error at graph creation!\n");
-    return 1;
+    printf("Graph created at graph.svg!\n");
+    return 0;
 
 }
