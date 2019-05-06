@@ -7,7 +7,7 @@ int init = -1;
 
 %option noyywrap
 
-id       [a-zA-Z0-9]+
+id       [a-ÿA-z0-9A-Þ_ã-]+
 number   [0-9]+
 string   [^\r\n]+
 wspace   [ \r\n]*
@@ -16,7 +16,7 @@ newline  (\r\n|\n)
 %x object_id attribute attributeValue connection
 
 %%
-(ator|estreia|filme)                    { init++; if (init == 0) { yyout = fopen("debug.flex", "w"); }
+(ator|estreia|filme)                    { init++; if (init == 0) { yyout = fopen("flex.txt", "w"); }
                             fprintf(yyout,"Início de Objeto\nTipo Objeto: %s\n", yytext); BEGIN object_id; yylval.str = strdup(yytext); return OBJECT_TYPE; }
 {id}                                    { fprintf(yyout,"Início de Ligação\nID: %s\n", yytext); BEGIN connection; yylval.str = strdup(yytext); return OBJECT_ID; }
 

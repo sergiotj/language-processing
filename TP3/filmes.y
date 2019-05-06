@@ -54,7 +54,7 @@ int yyerror(char *s) {
 void getData() {
 
         // Graph header
-    printf("digraph D {\n  node [shape=Mrecord fontname=\"Arial\"];\n  edge [fontname=\"Arial\"];\n");
+    printf("digraph D {\n  node [shape=Mrecord fontname=\"Helvetica\" fontsize = 9];\n  edge [fontname=\"Helvetica\" fontsize = 11];\n");
     // Print every node
     // (unsigned int because node_data->len is a guint)
     unsigned int lastUsed = 0;
