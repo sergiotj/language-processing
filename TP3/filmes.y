@@ -1,4 +1,5 @@
 %{
+
 #include <stdio.h>
 #include <glib.h>
 #include <string.h>
@@ -6,8 +7,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-GArray* node_data;
-GArray* edge_data;
+GArray* objectsData;
+GArray* connectionsData;
+
 %}
 
 %token OBJECT_TYPE STRING OBJECT_ID ATTRIBUTE PARTICIPOU ESTREOU ERR
@@ -27,18 +29,29 @@ Objects: Objects Object
         |
 ;
 
-Object: OBJECT_TYPE OBJECT_ID Fields        { char* one = strdup($1); char* two = strdup($2); g_array_append_val(node_data, one); g_array_append_val(node_data,                                                 two); }
+Object: OBJECT_TYPE OBJECT_ID Fields        {   char* oneO = strdup($1); char* twoO = strdup($2);
+                                                g_array_append_val(objectsData, oneO);
+                                                g_array_append_val(objectsData,twoO); }
 ;
 
 Fields: Fields Field
        | Field
 ;
 
-Field: ATTRIBUTE STRING     { char* one = strdup($1); char* two = strdup($2); g_array_append_val(node_data, one); g_array_append_val(node_data, two); }
+Field: ATTRIBUTE STRING     {   char* oneF = strdup($1); char* twoF = strdup($2);
+                                g_array_append_val(objectsData, oneF);
+                                g_array_append_val(objectsData, twoF); }
 ;
 
-Connection: OBJECT_ID PARTICIPOU OBJECT_ID         { char* one = strdup($1); char* three = strdup($3); char* f = "participou"; g_array_append_val(edge_data, one);                                                          g_array_append_val(edge_data, three); g_array_append_val(edge_data, f); }
-           | OBJECT_ID ESTREOU OBJECT_ID  { char* one = strdup($1); char* three = strdup($3); char* p = "estreou"; g_array_append_val(edge_data, one);                                                  g_array_append_val(edge_data, three); g_array_append_val(edge_data, p); }
+Connection: OBJECT_ID PARTICIPOU OBJECT_ID          {   char* oneO = strdup($1); char* threeO = strdup($3); char* part = "participou";
+                                                        g_array_append_val(connectionsData, oneO);
+                                                        g_array_append_val(connectionsData, threeO);
+                                                        g_array_append_val(connectionsData, part); }
+
+           | OBJECT_ID ESTREOU OBJECT_ID            {   char* oneO = strdup($1); char* threeO = strdup($3); char* estr = "estreou";
+                                                        g_array_append_val(connectionsData, oneO);
+                                                        g_array_append_val(connectionsData, threeO);
+                                                        g_array_append_val(connectionsData, estr); }
 ;
 %%
 
@@ -53,31 +66,41 @@ int yyerror(char *s) {
 
 void getData() {
 
-        // Graph header
+    // Cabeçalho do grafo
     printf("digraph D {\n  node [shape=Mrecord fontname=\"Helvetica\" fontsize = 9];\n  edge [fontname=\"Helvetica\" fontsize = 11];\n");
-    // Print every node
-    // (unsigned int because node_data->len is a guint)
+
+    // unsigned int pq objectsData-> é um "guint"
     unsigned int lastUsed = 0;
 
-    for (unsigned int i = 0; i < node_data->len; i++) {
+    for (unsigned int i = 0; i < objectsData->len; i++) {
 
-        if (strcmp(g_array_index(node_data, char*, i), "ator") == 0 ||
-            strcmp(g_array_index(node_data, char*, i), "filme") == 0 ||
-            strcmp(g_array_index(node_data, char*, i), "estreia") == 0) {
+        // Se encontra um objeto no array que é ator, filme ou estreia...
+        if (strcmp(g_array_index(objectsData, char*, i), "ator") == 0 ||
+            strcmp(g_array_index(objectsData, char*, i), "filme") == 0 ||
+            strcmp(g_array_index(objectsData, char*, i), "estreia") == 0) {
 
-            printf("%s [label=\"{", g_array_index(node_data, char*, i+1));
+            // ENCONTROU UM OBJECTO
+            printf("%s [label=\"{", g_array_index(objectsData, char*, i+1));
 
-            char* label;
-            char* string;
+            char* attributeY;
+            char* attributeValueY;
             int startedWriting = 0;
 
             for (; lastUsed < i; lastUsed++) {
 
-                label = g_array_index(node_data, char*, lastUsed);
-                label[0] = toupper(label[0]); // Uppercase first char of label
-                lastUsed++; // Go to next node_data token
-                string = g_array_index(node_data, char*, lastUsed);
-                if (strcmp(label, "Url") == 0) {
+                // obtém o atributo: pode ser Nome, Género, Idioma etc...
+                attributeY = g_array_index(objectsData, char*, lastUsed);
+
+                // passa o atributo para maiúscula
+                attributeY[0] = toupper(attributeY[0]);
+
+                // anda um para a frente
+                lastUsed++;;
+
+                // obtém o valor do atributo (já se andou um para a frente)
+                attributeValueY = g_array_index(objectsData, char*, lastUsed);
+
+                if (strcmp(attributeY, "Url") == 0) {
                     break;
                 }
                 if (startedWriting) {
@@ -86,11 +109,11 @@ void getData() {
                     startedWriting = 1;
                 }
 
-                printf("%s: %s", label, string);
+                printf("%s: %s", attributeY, attributeValueY);
             }
 
-            if (strcmp(label, "Url") == 0) {
-                printf("}\", URL=\"%s\"];\n", string);
+            if (strcmp(attributeY, "Url") == 0) {
+                printf("}\", URL=\"%s\"];\n", attributeValueY);
                 lastUsed += 3; // Move lastUsed 3 steps forward because we stopped at url
             } else {
                 printf("}\"];\n");
@@ -99,19 +122,28 @@ void getData() {
         }
     }
 
-    // Print every edge
-    for (unsigned int j = 0; j < edge_data->len; j++) {
+    // Queremos imprimir: bale -> prestige[label="participou"]
+    unsigned int j = 0;
+    while (j < connectionsData->len) {
 
-        char* doer = g_array_index(edge_data, char*, j);
+        // obtém o objeto do lado esquerdo
+        char* fstCon = g_array_index(connectionsData, char*, j);
         j++;
-        char* done = g_array_index(edge_data, char*, j);
-        j++;
-        char* action = g_array_index(edge_data, char*, j);
 
-        printf("%s -> %s[label=\"%s\"]\n", doer, done, action);
+        // obtém o objeto do lado direito
+        char* sndCon = g_array_index(connectionsData, char*, j);
+        j++;
+
+        // obtém a ação
+        char* con = g_array_index(connectionsData, char*, j);
+
+        printf("%s -> %s[label=\"%s\"]\n", fstCon, sndCon, con);
+
+        j++;
+
     }
 
-    // Close graph
+    // Fecha o grafo
     printf("}\n");
 
 }
@@ -128,8 +160,8 @@ int main(int argc, char **argv) {
 
     yyin = myfile;
 
-    node_data = g_array_new(FALSE, TRUE, sizeof(char*));
-    edge_data = g_array_new(FALSE, TRUE, sizeof(char*));
+    objectsData = g_array_new(FALSE, TRUE, sizeof(char*));
+    connectionsData = g_array_new(FALSE, TRUE, sizeof(char*));
     yyparse();
 
     printf("----- Creating graph... -----\n");

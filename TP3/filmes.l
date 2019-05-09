@@ -20,9 +20,9 @@ newline  (\r\n|\n)
                             fprintf(yyout,"Início de Objeto\nTipo Objeto: %s\n", yytext); BEGIN objectID; yylval.str = strdup(yytext); return OBJECT_TYPE; }
 {id}                                    { fprintf(yyout,"Início de Ligação\nID: %s\n", yytext); BEGIN connection; yylval.str = strdup(yytext); return OBJECT_ID; }
 
-<objectID>{wspace}                     { /* Eating spaces */ }
-<objectID>[Ii][Dd]{wspace}"->"         { /* Eating identifier */ }
-<objectID>{id}                         { fprintf(yyout,"ID: %s\n", yytext); yylval.str = strdup(yytext); BEGIN attribute; return OBJECT_ID; }
+<objectID>{wspace}                      { /* Eating spaces */ }
+<objectID>[Ii][Dd]{wspace}"->"          { /* Eating identifier */ }
+<objectID>{id}                          { fprintf(yyout,"ID: %s\n", yytext); yylval.str = strdup(yytext); BEGIN attribute; return OBJECT_ID; }
 
 <attribute>{wspace}                     { ; } /* remove espaços atrás do atributo */
 <attribute>{id}                         { fprintf(yyout,"Atributo: %s\n", yytext); yylval.str = strdup(yytext); return ATTRIBUTE; }
@@ -32,8 +32,8 @@ newline  (\r\n|\n)
 <attributeValue>[ ]*{newline}{2,}       { fprintf(yyout,"Fim de Objeto\n\n"); BEGIN INITIAL; }
 <attributeValue>[ ]*{newline}           { fprintf(yyout,"Fim de String\n"); BEGIN attribute; }
 
-<connection>{wspace}participou{wspace}  { fprintf(yyout,"participou\n"); return PARTICIPOU; }
-<connection>{wspace}estreou{wspace}     { fprintf(yyout,"estreou\n"); return ESTREOU; }
+<connection>{wspace}participou{wspace}  { fprintf(yyout,"Ligação: participou\n"); return PARTICIPOU; }
+<connection>{wspace}estreou{wspace}     { fprintf(yyout,"Ligação: estreou\n"); return ESTREOU; }
 <connection>{id}                        { fprintf(yyout,"ID: %s\n", yytext); yylval.str = strdup(yytext); return OBJECT_ID; }
 <connection>[ ]*{newline}               { fprintf(yyout,"Fim de ligação\n\n"); BEGIN INITIAL; }
 
