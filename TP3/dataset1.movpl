@@ -1,69 +1,79 @@
-ator leonardo:
-    Nome: Leonardo DiCaprio
-    Nascimento: 1974-11-11
-    Nacionalidade: USA
-    url: https://www.google.pt/search?q=leonardo+dicaprio
+ator
+ID -> leonardo
+Nome: Leonardo DiCaprio
+Nascimento: 1974-11-11
+Nacionalidade: USA
+url: https://www.google.pt/search?q=leonardo+dicaprio
 
-ator bale:
-    Nome: Christian Bale
-    Nascimento: 1974-01-30
-    Nacionalidade: USA
-    url: https://www.google.pt/search?q=christian+bale
+ator
+ID -> bale
+Nome: Christian Bale
+Nascimento: 1974-01-30
+Nacionalidade: USA
+url: https://www.google.pt/search?q=christian+bale
 
-filme shutterisland:
-    Nome: Shutter Island
-    Género: Thriller
-    Duração: 148
-    Idioma: Inglês
-    Estúdio: Paramount
+filme
+id -> shutterisland
+Nome: Shutter Island
+Género: Thriller
+Duração: 148
+Idioma: Inglês
+Estúdio: Paramount
 
-filme inception:
-    Nome: Inception
-    Género: Thriller
-    Duração: 148
-    Idioma: Inglês
-    Estúdio: Warner Bros
+filme
+Id -> inception
+Nome: Inception
+Género: Thriller
+Duração: 148
+Idioma: Inglês
+Estúdio: Warner Bros
 
-filme batman1:
-    Nome: Batman Begins
-    Géneros: Ação, Aventura, Thriller
-    Duração: 140
-    Idioma: Inglês
-    Estúdio: Warner Bros
+filme
+ID -> batman1
+Nome: Batman Begins
+Géneros: Ação, Aventura, Thriller
+Duração: 140
+Idioma: Inglês
+Estúdio: Warner Bros
 
-filme batman2:
-    Nome: The Dark Knight
-    Géneros: Ação, Policial, Thriller
-    Duração: 152
-    Idioma: Inglês
-    Estúdio: Warner Bros
+filme
+ID -> batman2
+Nome: The Dark Knight
+Géneros: Ação, Policial, Thriller
+Duração: 152
+Idioma: Inglês
+Estúdio: Warner Bros
 
-filme batman3:
-    Nome: The Dark Knight Rises
-    Géneros: Aventura, Ação, Policial, Drama
-    Duração: 165
-    Idioma: Inglês
-    Estúdio: Warner Bros
+filme
+ID -> batman3
+Nome: The Dark Knight Rises
+Géneros: Aventura, Ação, Policial, Drama
+Duração: 165
+Idioma: Inglês
+Estúdio: Warner Bros
 
-filme prestige:
-    Nome: The Prestige
-    Género: Thriller
-    Duração: 130
-    Idioma: Inglês
-    Estúdio: Warner Bros
+filme
+ID -> prestige
+Nome: The Prestige
+Género: Thriller
+Duração: 130
+Idioma: Inglês
+Estúdio: Warner Bros
 
-estreia shutterEv:
-    Data: 2010-02-25
-    Local: Braga
+estreia
+ID -> shutterEv
+Data: 2010-02-25
+Local: Braga
 
-estreia inceptionEv:
-    Data: 2010-07-22
-    Local: Braga
+estreia
+ID -> inceptionEv
+Data: 2010-07-22
+Local: Braga
 
-estreia prestigeEv:
-    Data: 2006-12-28
-    Local: Braga
-
+estreia
+ID -> prestigeEv
+Data: 2006-12-28
+Local: Braga
 
 
 leonardo participou shutterisland
