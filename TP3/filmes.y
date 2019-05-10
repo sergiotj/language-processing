@@ -97,13 +97,19 @@ void getData() {
 
     for (unsigned int i = 0; i < objectsData->len; i++) {
 
+        char* objectFound = g_array_index(objectsData, char*, i);
+
+        // passa o tipo do objeto para maiúscula
+        objectFound[0] = toupper(objectFound[0]);
+
         // Se encontra um objeto no array que é ator, filme ou estreia...
-        if (strcmp(g_array_index(objectsData, char*, i), "ator") == 0 ||
-            strcmp(g_array_index(objectsData, char*, i), "filme") == 0 ||
-            strcmp(g_array_index(objectsData, char*, i), "estreia") == 0) {
+        if (strcmp(objectFound, "ator") == 0 || strcmp(objectFound, "Ator") == 0 ||
+            strcmp(objectFound, "filme") == 0 || strcmp(objectFound, "Filme") == 0 ||
+            strcmp(objectFound, "estreia") == 0 || strcmp(objectFound, "Estreia") == 0) {
 
             // ENCONTROU UM OBJECTO
-            printf("%s [label=\"{", g_array_index(objectsData, char*, i+1));
+
+            printf("%s [label=\"{%s | ", g_array_index(objectsData, char*, i+1), objectFound);
 
             char* attributeY;
             char* attributeValueY;
