@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <glib.h>
+#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <fcntl.h>
@@ -9,6 +10,21 @@
 
 GArray* objectsData;
 GArray* connectionsData;
+
+int lookup(char* objectID) {
+
+    for (unsigned int i = 0; i < objectsData->len; i++) {
+
+        // Se encontra um objeto no array que é igual
+        if (strcmp(g_array_index(objectsData, char*, i), objectID) == 0) {
+
+                return 1;
+            }
+
+    }
+
+    return -1;
+}
 
 %}
 
@@ -29,9 +45,16 @@ Objects: Objects Object
         |
 ;
 
-Object: OBJECT_TYPE OBJECT_ID Fields        {   char* oneO = strdup($1); char* twoO = strdup($2);
-                                                g_array_append_val(objectsData, oneO);
-                                                g_array_append_val(objectsData,twoO); }
+Object: OBJECT_TYPE OBJECT_ID Fields        {   char* type = strdup($1); char* id = strdup($2);
+                                                if (lookup(id) == -1) {
+                                                    g_array_append_val(objectsData, type);
+                                                    g_array_append_val(objectsData, id);
+                                                }
+                                                else {
+                                                    yyerror("ID já declarado!");
+                                                    exit(1);
+                                                }
+                                            }
 ;
 
 Fields: Fields Field
@@ -61,7 +84,7 @@ int yylex();
 
 int yyerror(char *s) {
 
-    printf("%s\n", s);
+    printf("Erro: %s\n", s);
 }
 
 void getData() {
