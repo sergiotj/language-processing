@@ -16,12 +16,12 @@ newline  (\r\n|\n)
 %x objectID attribute attributeValue connection
 
 %%
-(ator|estreia|filme)                    { init++; if (init == 0) { yyout = fopen("flex.txt", "w"); }
+([Aa]tor|[Ee]streia|[Ff]ilme)                    { init++; if (init == 0) { yyout = fopen("flex.txt", "w"); }
                             fprintf(yyout,"Início de Objeto\nTipo Objeto: %s\n", yytext); BEGIN objectID; yylval.str = strdup(yytext); return OBJECT_TYPE; }
 {id}                                    { fprintf(yyout,"Início de Ligação\nID: %s\n", yytext); BEGIN connection; yylval.str = strdup(yytext); return OBJECT_ID; }
 
-<objectID>{wspace}                      { /* Eating spaces */ }
-<objectID>[Ii][Dd]{wspace}"->"          { /* Eating identifier */ }
+<objectID>{wspace}                      { /* tirar espaços */ }
+<objectID>[Ii][Dd]{wspace}"->"          { /* tirar "ID" */ }
 <objectID>{id}                          { fprintf(yyout,"ID: %s\n", yytext); yylval.str = strdup(yytext); BEGIN attribute; return OBJECT_ID; }
 
 <attribute>{wspace}                     { ; } /* remove espaços atrás do atributo */
@@ -37,6 +37,6 @@ newline  (\r\n|\n)
 <connection>{id}                        { fprintf(yyout,"ID: %s\n", yytext); yylval.str = strdup(yytext); return OBJECT_ID; }
 <connection>[ ]*{newline}               { fprintf(yyout,"Fim de ligação\n\n"); BEGIN INITIAL; }
 
-{newline}                               { fprintf(yyout,"Removendo \\n.\n"); yylineno++; }
-.                                       { fprintf(yyout,"Erro.\n"); return ERR; }
+{newline}                               { fprintf(yyout,"Removendo \\n.\n"); }
+.                                       { fprintf(yyout,"Erro.\n"); return ERROR; }
 %%

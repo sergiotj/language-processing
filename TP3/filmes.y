@@ -11,16 +11,23 @@
 GArray* objectsData;
 GArray* connectionsData;
 
-int lookup(char* objectID) {
+GHashTable* actors;
+GHashTable* movies;
+GHashTable* events;
 
-    for (unsigned int i = 0; i < objectsData->len; i++) {
+int lookup(char* type, char* objectID) {
 
-        // Se encontra um objeto no array que é igual
-        if (strcmp(g_array_index(objectsData, char*, i), objectID) == 0) {
+    if (strcmp(type, "ator") == 0 || strcmp(type, "Ator") == 0) {
+        if (g_hash_table_contains(actors, objectID)) return 1;
+    }
+    if (strcmp(type, "filme") == 0 || strcmp(type, "Filme") == 0) {
 
-                return 1;
-            }
+        if (g_hash_table_contains(movies, objectID)) return 1;
+    }
 
+    if (strcmp(type, "estreia") == 0 || strcmp(type, "Estreia") == 0) {
+
+        if (g_hash_table_contains(events, objectID)) return 1;
     }
 
     return -1;
@@ -28,7 +35,7 @@ int lookup(char* objectID) {
 
 %}
 
-%token OBJECT_TYPE STRING OBJECT_ID ATTRIBUTE PARTICIPOU ESTREOU ERR
+%token OBJECT_TYPE STRING OBJECT_ID ATTRIBUTE PARTICIPOU ESTREOU ERROR
 
 %union {
 
@@ -46,9 +53,15 @@ Objects: Objects Object
 ;
 
 Object: OBJECT_TYPE OBJECT_ID Fields        {   char* type = strdup($1); char* id = strdup($2);
-                                                if (lookup(id) == -1) {
+                                                if (lookup(type, id) == -1) {
+
                                                     g_array_append_val(objectsData, type);
                                                     g_array_append_val(objectsData, id);
+
+                                                    if (strcmp(type, "ator") == 0 || strcmp(type, "Ator") == 0) g_hash_table_insert(actors, id, id);
+                                                    if (strcmp(type, "filme") == 0 || strcmp(type, "Filme") == 0) g_hash_table_insert(movies, id, id);
+                                                    if (strcmp(type, "estreia") == 0 || strcmp(type, "Estreia") == 0) g_hash_table_insert(events, id, id);
+
                                                 }
                                                 else {
                                                     yyerror("ID já declarado!");
@@ -66,15 +79,33 @@ Field: ATTRIBUTE STRING     {   char* oneF = strdup($1); char* twoF = strdup($2)
                                 g_array_append_val(objectsData, twoF); }
 ;
 
-Connection: OBJECT_ID PARTICIPOU OBJECT_ID          {   char* oneO = strdup($1); char* threeO = strdup($3); char* part = "participou";
-                                                        g_array_append_val(connectionsData, oneO);
-                                                        g_array_append_val(connectionsData, threeO);
-                                                        g_array_append_val(connectionsData, part); }
+Connection: OBJECT_ID PARTICIPOU OBJECT_ID          {   char* fstID = strdup($1); char* sndID = strdup($3); char* part = "participou";
 
-           | OBJECT_ID ESTREOU OBJECT_ID            {   char* oneO = strdup($1); char* threeO = strdup($3); char* estr = "estreou";
-                                                        g_array_append_val(connectionsData, oneO);
-                                                        g_array_append_val(connectionsData, threeO);
-                                                        g_array_append_val(connectionsData, estr); }
+                                                        if (g_hash_table_contains(actors, fstID) && g_hash_table_contains(movies, sndID)) {
+
+                                                            g_array_append_val(connectionsData, fstID);
+                                                            g_array_append_val(connectionsData, sndID);
+                                                            g_array_append_val(connectionsData, part);
+
+                                                        } else {
+                                                            yyerror("Conexão inválida!");
+                                                            exit(1);
+                                                        }
+                                                    }
+
+           | OBJECT_ID ESTREOU OBJECT_ID            {   char* fstID = strdup($1); char* sndID = strdup($3); char* estr = "estreou";
+
+                                                        if (g_hash_table_contains(movies, fstID) && g_hash_table_contains(events, sndID)) {
+
+                                                            g_array_append_val(connectionsData, fstID);
+                                                            g_array_append_val(connectionsData, sndID);
+                                                            g_array_append_val(connectionsData, estr);
+
+                                                        } else {
+                                                            yyerror("Conexão inválida!");
+                                                            exit(1);
+                                                        }
+                                                    }
 ;
 %%
 
@@ -143,10 +174,14 @@ void getData() {
 
             if (strcmp(attributeY, "Url") == 0) {
                 printf("}\", URL=\"%s\"];\n", attributeValueY);
-                lastUsed += 3; // Move lastUsed 3 steps forward because we stopped at url
+
+                // mover 3 passos para a frente pq paramos no URL
+                lastUsed += 3;
             } else {
                 printf("}\"];\n");
-                lastUsed += 2; // Move lastUsed 2 steps forward
+
+                // mover 2 passos para a frente
+                lastUsed += 2;
             }
         }
     }
@@ -191,6 +226,10 @@ int main(int argc, char **argv) {
 
     objectsData = g_array_new(FALSE, TRUE, sizeof(char*));
     connectionsData = g_array_new(FALSE, TRUE, sizeof(char*));
+
+    actors = g_hash_table_new(g_str_hash,g_str_equal);
+    movies = g_hash_table_new(g_str_hash,g_str_equal);
+    events = g_hash_table_new(g_str_hash,g_str_equal);
     yyparse();
 
     printf("----- Creating graph... -----\n");
