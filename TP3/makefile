@@ -8,3 +8,6 @@ y.tab.c y.tab.h: filmes.y
 
 lex.yy.c: filmes.l y.tab.h
 	flex filmes.l
+
+clean:
+	rm filmes y.* lex.yy.c 
