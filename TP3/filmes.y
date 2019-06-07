@@ -37,14 +37,14 @@ void hashInsert(char* type, char* id) {
 
 %}
 
-%token STRING OBJECT_TYPE OBJECT_ID ATTRIBUTE PARTICIPOU ESTREOU ERROR
+%token TYPE ID ATTRIBUTE ATTRIBUTEVAL APPEARED OPENED ERROR
 
 %union {
 
   char* str;
 }
 
-%type <str> STRING OBJECT_TYPE OBJECT_ID ATTRIBUTE
+%type <str> TYPE ID ATTRIBUTE ATTRIBUTEVAL
 
 %start Objects
 
@@ -54,7 +54,7 @@ Objects: Objects Object
         |
 ;
 
-Object: OBJECT_TYPE OBJECT_ID Fields        {   char* type = strdup($1); char* id = strdup($2);
+Object: TYPE ID Fields        {   char* type = strdup($1); char* id = strdup($2);
                                                 if (lookup(id) == -1) {
 
                                                     g_array_append_val(objectsData, type);
@@ -74,12 +74,12 @@ Fields: Fields Field
        | Field
 ;
 
-Field: ATTRIBUTE STRING     {   char* oneF = strdup($1); char* twoF = strdup($2);
-                                g_array_append_val(objectsData, oneF);
-                                g_array_append_val(objectsData, twoF); }
+Field: ATTRIBUTE ATTRIBUTEVAL     {   char* oneF = strdup($1); char* twoF = strdup($2);
+                                        g_array_append_val(objectsData, oneF);
+                                        g_array_append_val(objectsData, twoF); }
 ;
 
-Connection: OBJECT_ID PARTICIPOU OBJECT_ID          {   char* fstID = strdup($1); char* sndID = strdup($3); char* part = "participou";
+Connection: ID APPEARED ID          {   char* fstID = strdup($1); char* sndID = strdup($3); char* part = "participou";
 
                                                         if (g_hash_table_contains(actors, fstID) && g_hash_table_contains(movies, sndID)) {
 
@@ -93,7 +93,7 @@ Connection: OBJECT_ID PARTICIPOU OBJECT_ID          {   char* fstID = strdup($1)
                                                         }
                                                     }
 
-           | OBJECT_ID ESTREOU OBJECT_ID            {   char* fstID = strdup($1); char* sndID = strdup($3); char* estr = "estreou";
+           | ID OPENED ID            {   char* fstID = strdup($1); char* sndID = strdup($3); char* estr = "estreou";
 
                                                         if (g_hash_table_contains(movies, fstID) && g_hash_table_contains(events, sndID)) {
 
