@@ -15,27 +15,29 @@ GHashTable* actors;
 GHashTable* movies;
 GHashTable* events;
 
-int lookup(char* type, char* objectID) {
+int lookup(char* objectID) {
 
-    if (strcmp(type, "ator") == 0 || strcmp(type, "Ator") == 0) {
-        if (g_hash_table_contains(actors, objectID)) return 1;
-    }
-    if (strcmp(type, "filme") == 0 || strcmp(type, "Filme") == 0) {
+    if (g_hash_table_contains(actors, objectID)) return 1;
 
-        if (g_hash_table_contains(movies, objectID)) return 1;
-    }
+    if (g_hash_table_contains(movies, objectID)) return 1;
 
-    if (strcmp(type, "estreia") == 0 || strcmp(type, "Estreia") == 0) {
-
-        if (g_hash_table_contains(events, objectID)) return 1;
-    }
+    if (g_hash_table_contains(events, objectID)) return 1;
 
     return -1;
 }
 
+void hashInsert(char* type, char* id) {
+
+    if (strcmp(type, "ator") == 0 || strcmp(type, "Ator") == 0) g_hash_table_insert(actors, id, id);
+
+    if (strcmp(type, "filme") == 0 || strcmp(type, "Filme") == 0) g_hash_table_insert(movies, id, id);
+
+    if (strcmp(type, "estreia") == 0 || strcmp(type, "Estreia") == 0) g_hash_table_insert(events, id, id);
+}
+
 %}
 
-%token OBJECT_TYPE STRING OBJECT_ID ATTRIBUTE PARTICIPOU ESTREOU ERROR
+%token STRING OBJECT_TYPE OBJECT_ID ATTRIBUTE PARTICIPOU ESTREOU ERROR
 
 %union {
 
@@ -53,14 +55,12 @@ Objects: Objects Object
 ;
 
 Object: OBJECT_TYPE OBJECT_ID Fields        {   char* type = strdup($1); char* id = strdup($2);
-                                                if (lookup(type, id) == -1) {
+                                                if (lookup(id) == -1) {
 
                                                     g_array_append_val(objectsData, type);
                                                     g_array_append_val(objectsData, id);
 
-                                                    if (strcmp(type, "ator") == 0 || strcmp(type, "Ator") == 0) g_hash_table_insert(actors, id, id);
-                                                    if (strcmp(type, "filme") == 0 || strcmp(type, "Filme") == 0) g_hash_table_insert(movies, id, id);
-                                                    if (strcmp(type, "estreia") == 0 || strcmp(type, "Estreia") == 0) g_hash_table_insert(events, id, id);
+                                                    hashInsert(type, id);
 
                                                 }
                                                 else {
