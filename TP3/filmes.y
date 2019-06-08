@@ -35,6 +35,8 @@ void hashInsert(char* type, char* id) {
     if (strcmp(type, "estreia") == 0 || strcmp(type, "Estreia") == 0) g_hash_table_insert(events, id, id);
 }
 
+int yylex();
+int yyerror(char *s);
 %}
 
 %token TYPE ID ATTRIBUTE ATTRIBUTEVAL APPEARED OPENED ERROR
